@@ -2,21 +2,24 @@
 
 body {
   margin-top: 16;
-  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .header-bloc {
-  border: 5px solid #FF00FF; /* Electric pink border */
+  width: 80%;
+  border: 5px solid #FF00FF;
   padding: 20px;
   text-align: center;
 }
 
 .header-text {
-  color: white; /* White text color for better contrast */
+  color: #ffffff;
+  font-weight: 500;
   font-size: 2em;
   font-family: "Orbitron", serif;
   font-optical-sizing: auto;
+  filter: invert(1);
+  mix-blend-mode: difference;
 }
