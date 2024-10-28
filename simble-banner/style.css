@@ -1,18 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Oxanium:wght@200..800&display=swap');
 
 body {
+  margin-top: 16;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: black; /* Black background for the entire page */
 }
 
 .header-bloc {
   border: 5px solid #FF00FF; /* Electric pink border */
   padding: 20px;
   text-align: center;
-  background-color: black; /* Black background for the header block */
 }
 
 .header-text {
