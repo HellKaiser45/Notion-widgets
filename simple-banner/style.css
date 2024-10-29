@@ -1,25 +1,43 @@
+/* Importing Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Oxanium:wght@200..800&display=swap');
 
-body {
-  margin-top: 16;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* ========== CSS Variables ========== */
+:root {
+
+  /* Border Variables */
+  --color-border: #000000;
+
+  /* Text Variables */
+  --color-txt: #00CCFF;
+  --color-bg: #00000000;
+  --font-weight: 500;
+  --font-size: 50;
+  --font: 'Orbitron';
+  --width: 500;
+  --height: 50;
 }
 
+/* ========== Global Styles ========== */
+body {
+  display: flex;
+  /* Removed background-color as per your instruction */
+}
+
+/* ========== Header Block Styles ========== */
 .header-bloc {
-  width: 80%;
-  border: 5px solid #FF00FF;
-  padding: 20px;
+  width: var(--width);
+  border-top: 4px solid var(--color-border);
+  border-bottom: 4px solid var(--color-border);
+  padding: 16px;
+  background-color: var(--color-bg);
   text-align: center;
 }
 
+/* ========== Header Text Styles ========== */
 .header-text {
-  color: #ffffff;
-  font-weight: 500;
-  font-size: 2em;
-  font-family: "Orbitron", serif;
+  color: var(--color-txt);
+  font-weight: var(--font-weight);
+  font-size: var(--font-size);
+  font-family: var(--font);
   font-optical-sizing: auto;
-  filter: invert(1);
-  mix-blend-mode: difference;
 }

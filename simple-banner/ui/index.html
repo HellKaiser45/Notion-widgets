@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>URL Builder</title>
+  <!-- Include jscolor Library via CDN for reliability -->
+  <script src="jscolor.js"></script>
+  <link rel="stylesheet" href="style.css" >
+</head>
+
+<body>
+  <section>
+    <h2>Customisable Options</h2>
+    <form id="url-builder-form" method="get">
+
+      <div class="form-group">
+        <label for="txt">Text</label>
+        <input type="text"
+        value="My Header"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="color-txt">Text Color:</label>
+        <input
+          id="color-txt"
+          name="color-txt"
+          data-jscolor="{
+            value: '#36BCF7FF',
+            backgroundColor: '#333',
+            shadowColor: '#FFFFFF80',
+            width: 121,
+            height: 121
+          }"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="color-border">Border Color:</label>
+        <input
+          id="color-border"
+          name="color-border"
+          data-jscolor="{
+            value: '#000000FF',
+            backgroundColor: '#333',
+            shadowColor: '#FFFFFF80',
+            width: 121,
+            height: 121
+          }"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="color-bg">Background Color:</label>
+        <input
+          id="color-bg"
+          name="color-bg"
+          data-jscolor="{
+            value: '#00000000',
+            backgroundColor: '#333',
+            shadowColor: '#FFFFFF80',
+            width: 121,
+            height: 121
+          }"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="font">Font:</label>
+        <input
+          type="text"
+          id="font"
+          name="font"
+          value="Orbitron"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="font-weight">Font Weight:</label>
+        <input
+          type="number"
+          id="font-weight"
+          name="font-weight"
+          value="400"
+          step="100"
+          min="200"
+          max="900"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="font-size">Font Size:</label>
+        <input
+          type="number"
+          id="font-size"
+          name="font-size"
+          value="50"
+          step="1"
+          required>
+      </div>
+
+      <!-- Width and Height Group -->
+      <div class="form-group size-group">
+
+        <div class="size-field">
+          <label for="width">Width:</label>
+          <input
+            type="number"
+            id="width"
+            name="width"
+            value="500"
+            step="1"
+            required>
+        </div>
+
+        <span class="multiply">×</span>
+
+        <div class="size-field">
+          <label for="height">Height:</label>
+          <input
+            type="number"
+            id="height"
+            name="height"
+            value="50"
+            step="1"
+            required>
+        </div>
+
+      </div>
+    </form>
+  </section>
+  <section class="result">
+    <h2>Preview</h2>
+    <iframe id="live-preview" style="width: 100%; height: 500px;"></iframe>
+    <h2>Iframe embed</h2>
+    <code>
+    <button class="copy-button" data-target="iframe-code">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M13 7H7V5H13V7Z" fill="currentColor"/>
+        <path d="M13 11H7V9H13V11Z" fill="currentColor"/>
+        <path d="M7 15H13V13H7V15Z" fill="currentColor"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M3 19V1H17V5H21V23H7V19H3ZM15 17V3H5V17H15ZM17 7V19H9V21H19V7H17Z" fill="currentColor"/>
+      </svg>
+    </button>
+      <pre id="iframe-code">
+      </pre>
+    </code>
+    <h2>Url</h2>
+    <code>
+      <button class="copy-button" data-target="url-display">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M13 7H7V5H13V7Z" fill="currentColor"/>
+          <path d="M13 11H7V9H13V11Z" fill="currentColor"/>
+          <path d="M7 15H13V13H7V15Z" fill="currentColor"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M3 19V1H17V5H21V23H7V19H3ZM15 17V3H5V17H15ZM17 7V19H9V21H19V7H17Z" fill="currentColor"/>
+        </svg>
+      </button>
+      <div id="url-display">https://hellkaiser45.github.io/Notion-widgets/simple-banner/index.html?</div>
+    </code>
+
+
+</section>
+  <script src="script.js"></script>
+</body>
+</html>
