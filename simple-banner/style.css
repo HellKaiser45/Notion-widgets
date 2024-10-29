@@ -20,6 +20,7 @@
 /* ========== Global Styles ========== */
 body {
   display: flex;
+  margin: 0;
 }
 
 /* ========== Header Block Styles ========== */
@@ -27,7 +28,7 @@ body {
   width: var(--width);
   border-top: 4px solid var(--color-border);
   border-bottom: 4px solid var(--color-border);
-  padding: 16px;
+
   background-color: var(--color-bg);
   text-align: center;
 }
