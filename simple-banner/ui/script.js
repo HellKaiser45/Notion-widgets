@@ -28,8 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'width': width,
       'height': height
     });
-    const urlWithParams = `http://localhost:5500/simple-banner/index.html?${params.toString()}`;
-    // const urlWithParams = `https://hellkaiser45.github.io/Notion-widgets/simple-banner/index.html?${params.toString()}`;
+    const urlWithParams = `https://hellkaiser45.github.io/Notion-widgets/simple-banner/index.html?${params.toString()}`;
     output.textContent = `${urlWithParams}`;
     iframe.src = urlWithParams;
     iframe.style.width = `${width}px`;
@@ -44,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateURL();
 });
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
   // Select all buttons with class 'copy-button'
@@ -65,3 +66,46 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  // window.matchMedia("(prefers-color-scheme: dark)").matches &&
+if (document.cookie.split("; ").find((row) => row.startsWith("mode=")))
+  {
+    const cookieType=document.cookie.split("; ").find((row) => row.startsWith("mode=")).replace("mode=","")
+    if (cookieType=="dark") {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.getElementById('svgDarkmode').setAttribute("src","https://api.iconify.design/line-md:moon-rising-twotone-loop.svg")
+    }
+    if (cookieType=="light") {
+      return
+    }
+}
+else{
+  if (window.matchMedia("(prefers-color-scheme: dark)").matches){
+    document.documentElement.setAttribute('data-theme', 'dark');
+      document.getElementById('svgDarkmode').setAttribute("src","https://api.iconify.design/line-md:moon-rising-twotone-loop.svg")
+  }
+  else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.getElementById('svgDarkmode').setAttribute("src","https://api.iconify.design/line-md:moon-filled-alt-to-sunny-filled-loop-transition.svg")
+  }
+}
+
+})
+
+
+
+document.getElementById("darkmode").addEventListener('click',function () {
+
+  const actualFilter=document.documentElement.getAttribute("data-theme")
+  if (actualFilter=='dark') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.getElementById('svgDarkmode').setAttribute("src","https://api.iconify.design/line-md:moon-filled-alt-to-sunny-filled-loop-transition.svg")
+    document.cookie="mode=light"
+
+    return
+  }
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.getElementById('svgDarkmode').setAttribute("src","https://api.iconify.design/line-md:moon-rising-twotone-loop.svg")
+  document.cookie="mode=dark"
+})
