@@ -1,9 +1,5 @@
 // Function to retrieve URL parameters and return them as an object
 
-
-const params = getURLParameters();
-const apply = applyParameters(params);
-
 function getURLParameters() {
   const queryString = window.location.search;
   console.log("Query string:", queryString);
@@ -70,3 +66,14 @@ function applyParameters(params) {
   });
 }
 // Execute when the page loads
+function updateUIOnParameterChange() {
+  const params = getURLParameters();
+  applyParameters(params);
+}
+
+window.addEventListener("popstate", (event) => {
+  const params = getURLParameters();
+  applyParameters(params);
+});
+// Call the function to handle parameters when the page loads
+window.addEventListener('load', updateUIOnParameterChange);

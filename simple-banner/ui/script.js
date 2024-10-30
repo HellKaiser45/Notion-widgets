@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
       'width': width,
       'height': height
     });
-
-    const urlWithParams = `https://hellkaiser45.github.io/Notion-widgets/simple-banner/index.html?${params.toString()}`;
+    const urlWithParams = `http://localhost:5500/simple-banner/index.html?${params.toString()}`;
+    // const urlWithParams = `https://hellkaiser45.github.io/Notion-widgets/simple-banner/index.html?${params.toString()}`;
     output.textContent = `${urlWithParams}`;
     iframe.src = urlWithParams;
     iframe.style.width = `${width}px`;
