@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const stripHash = (color) => color.startsWith('#') ? color.substring(1) : color;
 
   const updateURL = () => {
-    const txt = stripHash(document.getElementById('text').value);
+    const text = document.getElementById('text').value;
     const colorTxt = stripHash(document.getElementById('color-txt').value);
     const colorBorder = stripHash(document.getElementById('color-border').value);
     const colorBg = stripHash(document.getElementById('color-bg').value);
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const height = document.getElementById('height').value;
 
     const params = new URLSearchParams({
-      'text':txt,
+      'text': text,
       'color-txt': colorTxt,
       'color-border': colorBorder,
       'color-bg': colorBg,

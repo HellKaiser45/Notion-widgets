@@ -19,8 +19,8 @@
 
 /* ========== Global Styles ========== */
 body {
-  display: flex;
   margin: 0;
+  display: none;
 }
 
 /* ========== Header Block Styles ========== */

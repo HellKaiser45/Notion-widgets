@@ -1,4 +1,9 @@
 // Function to retrieve URL parameters and return them as an object
+
+
+const params = getURLParameters();
+const apply = applyParameters(params);
+
 function getURLParameters() {
   const queryString = window.location.search;
   console.log("Query string:", queryString);
@@ -59,13 +64,9 @@ function applyParameters(params) {
       header.textContent = value;
     }
     root.style.setProperty(`--${key}`, value);
+    document.getElementById('svgContainer').style.setProperty('display','flex')
     console.log(`--${key} appliqué avec la valeur: ${value}`);
     console.log(`Header text changed to: ${value}`);
   });
 }
 // Execute when the page loads
-window.onload = function() {
-  const params = getURLParameters();
-  const apply = applyParameters(params);
-
-};
