@@ -2,167 +2,103 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>URL Builder</title>
   <!-- Include jscolor Library via CDN for reliability -->
   <script src="jscolor.js"></script>
-  <link rel="stylesheet" href="style.css" >
+  <link rel="stylesheet" href="style.css">
 </head>
-
-<button type="button" id="darkmode">
-  <image id="svgDarkmode" type="svg" src="https://api.iconify.design/line-md:moon-rising-twotone-loop.svg"/>
-</button>
-
 <body>
-  <section>
-    <h2>Customisable Options</h2>
-    <form id="url-builder-form" method="get">
-      <div class="form-group">
-        <label for="text">Text</label>
-        <input id="text" type="text"
-        value="My Header"
-          required>
-      </div>
+  <button type="button" id="darkmode">
+    <img id="svgDarkmode" type="svg" src="https://api.iconify.design/line-md:moon-rising-twotone-loop.svg" alt="Toggle Dark Mode">
+  </button>
 
-      <div class="form-group">
-        <label for="color-txt">Text Color:</label>
-        <input
-          id="color-txt"
-          name="color-txt"
-          data-jscolor="{
-            value: '#36BCF7FF',
-            backgroundColor: '#333',
-            shadowColor: '#FFFFFF80',
-            width: 121,
-            height: 121
-          }"
-          required>
-      </div>
+  <h1>Header Generator for Notion</h1>
+  <a href="https://github.com/HellKaiser45/Notion-widgets" target="_blank" rel="noopener noreferrer">
+    <img  alt="View on Github" src="https://img.shields.io/badge/View%20on%20Github-white?logo=github&logoColor=black">
+  </a>
+  <a href="https://linktr.ee/julienJDE" target="_blank" rel="noopener noreferrer">
+    <img  alt="My socials" src="https://img.shields.io/badge/My%20socials-white?logo=linktree">
+  </a>
+  <a href="https://www.twitch.tv/julienjde" target="_blank" rel="noopener noreferrer">
+    <img  alt="Twitch Status" src="https://img.shields.io/twitch/status/julienJDE">
+  </a>
 
-      <div class="form-group">
-        <label for="color-border">Border Color:</label>
-        <input
-          id="color-border"
-          name="color-border"
-          data-jscolor="{
-            value: '#000000FF',
-            backgroundColor: '#333',
-            shadowColor: '#FFFFFF80',
-            width: 121,
-            height: 121
-          }"
-          required>
-      </div>
-
-      <div class="form-group">
-        <label for="color-bg">Background Color:</label>
-        <input
-          id="color-bg"
-          name="color-bg"
-          data-jscolor="{
-            value: '#00000000',
-            backgroundColor: '#333',
-            shadowColor: '#FFFFFF80',
-            width: 121,
-            height: 121
-          }"
-          required>
-      </div>
-
-      <div class="form-group">
-        <label for="font">Font:</label>
-        <input
-          type="text"
-          id="font"
-          name="font"
-          value="Orbitron"
-          required>
-      </div>
-
-      <div class="form-group">
-        <label for="font-weight">Font Weight:</label>
-        <input
-          type="number"
-          id="font-weight"
-          name="font-weight"
-          value="400"
-          step="100"
-          min="200"
-          max="900"
-          required>
-      </div>
-
-      <div class="form-group">
-        <label for="font-size">Font Size:</label>
-        <input
-          type="number"
-          id="font-size"
-          name="font-size"
-          value="50"
-          step="1"
-          required>
-      </div>
-
-      <!-- Width and Height Group -->
-      <div class="form-group size-group">
-
-        <div class="size-field">
-          <label for="width">Width:</label>
-          <input
-            type="number"
-            id="width"
-            name="width"
-            value="500"
-            step="1"
-            required>
+  <div class="structure-wrapper">
+    <section>
+      <h2>Customisable Options</h2>
+      <form id="url-builder-form" method="get">
+        <div class="form-group">
+          <label for="text">Text</label>
+          <input id="text" type="text" value="My Header" required>
         </div>
 
-        <span class="multiply">×</span>
-
-        <div class="size-field">
-          <label for="height">Height:</label>
-          <input
-            type="number"
-            id="height"
-            name="height"
-            value="50"
-            step="1"
-            required>
+        <div class="form-group">
+          <label for="color-txt">Text Color:</label>
+          <input id="color-txt" name="color-txt" data-jscolor="{value: '#36BCF7FF', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 121, height: 121}" required>
         </div>
 
-      </div>
-    </form>
-  </section>
-  <section class="result">
-    <h2>Preview</h2>
-    <iframe id="live-preview" style="width: 100%; height: 500px;"></iframe>
-    <h2>Iframe embed</h2>
-    <code>
-    <button class="copy-button" data-target="iframe-code">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M13 7H7V5H13V7Z" fill="currentColor"/>
-        <path d="M13 11H7V9H13V11Z" fill="currentColor"/>
-        <path d="M7 15H13V13H7V15Z" fill="currentColor"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M3 19V1H17V5H21V23H7V19H3ZM15 17V3H5V17H15ZM17 7V19H9V21H19V7H17Z" fill="currentColor"/>
-      </svg>
-    </button>
-      <pre id="iframe-code">
-      </pre>
-    </code>
-    <h2>Url</h2>
-    <code>
-      <button class="copy-button" data-target="url-display">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M13 7H7V5H13V7Z" fill="currentColor"/>
-          <path d="M13 11H7V9H13V11Z" fill="currentColor"/>
-          <path d="M7 15H13V13H7V15Z" fill="currentColor"/>
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M3 19V1H17V5H21V23H7V19H3ZM15 17V3H5V17H15ZM17 7V19H9V21H19V7H17Z" fill="currentColor"/>
-        </svg>
-      </button>
-      <div id="url-display">https://hellkaiser45.github.io/Notion-widgets/simple-banner/index.html?</div>
-    </code>
+        <div class="form-group">
+          <label for="color-border">Border Color:</label>
+          <input id="color-border" name="color-border" data-jscolor="{value: '#000000FF', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 121, height: 121}" required>
+        </div>
 
+        <div class="form-group">
+          <label for="color-bg">Background Color:</label>
+          <input id="color-bg" name="color-bg" data-jscolor="{value: '#00000000', backgroundColor: '#333', shadowColor: '#FFFFFF80', width: 121, height: 121}" required>
+        </div>
 
-</section>
+        <div class="form-group">
+          <label for="font">Font:</label>
+          <input type="text" id="font" name="font" value="Orbitron" required>
+        </div>
+
+        <div class="form-group">
+          <label for="font-weight">Font Weight:</label>
+          <input type="number" id="font-weight" name="font-weight" value="400" step="100" min="200" max="900" required>
+        </div>
+
+        <div class="form-group">
+          <label for="font-size">Font Size:</label>
+          <input type="number" id="font-size" name="font-size" value="50" step="1" required>
+        </div>
+
+        <div class="form-group size-group">
+          <div class="size-field">
+            <label for="width">Width:</label>
+            <input type="number" id="width" name="width" value="500" step="1" required>
+          </div>
+          <span class="multiply">×</span>
+          <div class="size-field">
+            <label for="height">Height:</label>
+            <input type="number" id="height" name="height" value="50" step="1" required>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section class="result">
+      <h2>Preview</h2>
+      <iframe id="live-preview" style="width: 100%; height: 500px;"></iframe>
+
+      <h2>Iframe embed</h2>
+      <code>
+        <button class="copy-button" data-target="iframe-code">
+          <img type="svg" src="https://api.iconify.design/material-symbols:content-copy-outline-rounded.svg" alt="Copy Iframe Code">
+        </button>
+        <pre id="iframe-code"></pre>
+      </code>
+
+      <h2>URL</h2>
+      <code>
+        <button class="copy-button" data-target="url-display">
+          <img type="svg" src="https://api.iconify.design/material-symbols:content-copy-outline-rounded.svg" alt="Copy URL">
+        </button>
+        <div id="url-display">https://hellkaiser45.github.io/Notion-widgets/simple-banner/index.html?</div>
+      </code>
+    </section>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

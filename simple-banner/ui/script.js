@@ -3,109 +3,103 @@ document.addEventListener('DOMContentLoaded', () => {
   const output = document.getElementById('url-display');
   const iframe = document.getElementById('live-preview');
   const iframeCode = document.getElementById('iframe-code');
+  const darkModeToggle = document.getElementById('darkmode');
+  const svgDarkMode = document.getElementById('svgDarkmode');
 
+  /**
+   * Removes the leading hash from a hex color string if present.
+   * @param {string} color - The color string to process.
+   * @returns {string} The color string without the leading hash.
+   */
   const stripHash = (color) => color.startsWith('#') ? color.substring(1) : color;
 
+  /**
+   * Updates the URL with the form input parameters and updates the iframe and embed code.
+   */
   const updateURL = () => {
-    const text = document.getElementById('text').value;
-    const colorTxt = stripHash(document.getElementById('color-txt').value);
-    const colorBorder = stripHash(document.getElementById('color-border').value);
-    const colorBg = stripHash(document.getElementById('color-bg').value);
-    const font = document.getElementById('font').value;
-    const fontWeight = document.getElementById('font-weight').value;
-    const fontSize = document.getElementById('font-size').value;
-    const width = document.getElementById('width').value;
-    const height = document.getElementById('height').value;
-
     const params = new URLSearchParams({
-      'text': text,
-      'color-txt': colorTxt,
-      'color-border': colorBorder,
-      'color-bg': colorBg,
-      'font': font,
-      'font-weight': fontWeight,
-      'font-size': fontSize,
-      'width': width,
-      'height': height
+      'text': document.getElementById('text').value,
+      'color-txt': stripHash(document.getElementById('color-txt').value),
+      'color-border': stripHash(document.getElementById('color-border').value),
+      'color-bg': stripHash(document.getElementById('color-bg').value),
+      'font': document.getElementById('font').value,
+      'font-weight': document.getElementById('font-weight').value,
+      'font-size': document.getElementById('font-size').value,
+      'width': document.getElementById('width').value,
+      'height': document.getElementById('height').value
     });
+
     const urlWithParams = `https://hellkaiser45.github.io/Notion-widgets/simple-banner/index.html?${params.toString()}`;
-    output.textContent = `${urlWithParams}`;
+    output.textContent = urlWithParams;
     iframe.src = urlWithParams;
-    iframe.style.width = `${width}px`;
-    iframe.style.height = `${height}px`;
-    iframeCode.textContent = `<iframe src="${urlWithParams}" style="width: ${width}px; height: ${height}px; border: none;"></iframe>`;
+    iframe.style.width = `${params.get('width')}px`;
+    iframe.style.height = `${params.get('height')}px`;
+    iframeCode.textContent = `<iframe src="${urlWithParams}" style="width: ${params.get('width')}px; height: ${params.get('height')}px; border: none;"></iframe>`;
   };
 
+  /**
+   * Attaches input and change event listeners to all input elements in the form to trigger URL updates.
+   */
   form.querySelectorAll('input').forEach(input => {
     input.addEventListener('input', updateURL);
     input.addEventListener('change', updateURL);
   });
 
+  // Initial call to update URL when the page loads
   updateURL();
-});
 
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Select all buttons with class 'copy-button'
+  /**
+   * Attaches a click event listener to all copy buttons to copy the content of the target element to the clipboard.
+   */
   document.querySelectorAll('.copy-button').forEach(button => {
-    button.addEventListener('click', function() {
-      // Retrieve the ID of the target element from the button's data attribute
+    button.addEventListener('click', function () {
       const targetId = this.getAttribute('data-target');
       const textToCopy = document.getElementById(targetId).textContent || document.getElementById(targetId).value;
 
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        this.classList.add('copied');
-        setTimeout(() => {
-          this.classList.remove('copied');
-        }, 2500);
-      }).catch(err => {
-        console.error('Failed to copy text:', err);
-      });
+      navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+          this.classList.add('copied');
+          setTimeout(() => this.classList.remove('copied'), 2500);
+        })
+        .catch(err => console.error('Failed to copy text:', err));
     });
   });
 
+  /**
+   * Sets the current theme (light or dark) and updates the icon and cookie accordingly.
+   * @param {string} theme - The theme to apply ('light' or 'dark').
+   */
+  const setTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    svgDarkMode.setAttribute('src', theme === 'dark'
+      ? 'https://api.iconify.design/line-md:moon-rising-twotone-loop.svg'
+      : 'https://api.iconify.design/line-md:moon-filled-alt-to-sunny-filled-loop-transition.svg'
+    );
+    document.cookie = `mode=${theme}`;
+  };
+
+  /**
+   * Retrieves the value of a specified cookie.
+   * @param {string} name - The name of the cookie to retrieve.
+   * @returns {string|null} The value of the cookie, or null if not found.
+   */
+  const getCookieValue = (name) => {
+    const cookie = document.cookie.split('; ').find(row => row.startsWith(`${name}=`));
+    return cookie ? cookie.split('=')[1] : null;
+  };
+
+  // Check for saved theme in cookies or use system preference
+  const savedTheme = getCookieValue('mode');
+  if (savedTheme) {
+    setTheme(savedTheme);
+  } else {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setTheme(prefersDark ? 'dark' : 'light');
+  }
+
+  // Add click event listener to toggle theme when the dark mode button is clicked
+  darkModeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+  });
 });
-
-document.addEventListener('DOMContentLoaded', () => {
-  // window.matchMedia("(prefers-color-scheme: dark)").matches &&
-if (document.cookie.split("; ").find((row) => row.startsWith("mode=")))
-  {
-    const cookieType=document.cookie.split("; ").find((row) => row.startsWith("mode=")).replace("mode=","")
-    if (cookieType=="dark") {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      document.getElementById('svgDarkmode').setAttribute("src","https://api.iconify.design/line-md:moon-rising-twotone-loop.svg")
-    }
-    if (cookieType=="light") {
-      return
-    }
-}
-else{
-  if (window.matchMedia("(prefers-color-scheme: dark)").matches){
-    document.documentElement.setAttribute('data-theme', 'dark');
-      document.getElementById('svgDarkmode').setAttribute("src","https://api.iconify.design/line-md:moon-rising-twotone-loop.svg")
-  }
-  else {
-    document.documentElement.setAttribute('data-theme', 'light');
-    document.getElementById('svgDarkmode').setAttribute("src","https://api.iconify.design/line-md:moon-filled-alt-to-sunny-filled-loop-transition.svg")
-  }
-}
-
-})
-
-
-
-document.getElementById("darkmode").addEventListener('click',function () {
-
-  const actualFilter=document.documentElement.getAttribute("data-theme")
-  if (actualFilter=='dark') {
-    document.documentElement.setAttribute('data-theme', 'light');
-    document.getElementById('svgDarkmode').setAttribute("src","https://api.iconify.design/line-md:moon-filled-alt-to-sunny-filled-loop-transition.svg")
-    document.cookie="mode=light"
-
-    return
-  }
-  document.documentElement.setAttribute('data-theme', 'dark');
-  document.getElementById('svgDarkmode').setAttribute("src","https://api.iconify.design/line-md:moon-rising-twotone-loop.svg")
-  document.cookie="mode=dark"
-})

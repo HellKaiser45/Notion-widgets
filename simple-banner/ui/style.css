@@ -1,58 +1,80 @@
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+/* Root Variables: Define the main color scheme and layout settings */
 :root {
-  /* Border Variables */
-  --bg-color: #ffffff;
-  --borders-color:#454c54;
-  --color-txt: #000000;
-  --input-colors: #e6eaef;
-  --shadows-colors: rgba(0, 0, 0, 0.2);
+  --bg-color: #ffffff; /* Background color */
+  --borders-color: #454c54; /* Border color */
+  --color-txt: #000000; /* Text color */
+  --input-colors: #e6eaef; /* Input background color */
+  --shadows-colors: rgba(0, 0, 0, 0.2); /* Shadow color */
+  --filter: invert(0); /* Default filter */
+  --flex-dir: row; /* Default flex direction */
 }
 
+/* Dark Theme Variables: Overrides for dark mode */
 [data-theme="dark"] {
-
   --bg-color: #000000;
   --borders-color: #bab3ab;
   --color-txt: #ffffff;
   --input-colors: #191510;
   --shadows-colors: rgba(255, 255, 255, 0.2);
+  --filter: invert(1);
 }
 
+/* Responsive Flex Direction for smaller screens */
+@media (max-width: 1150px) {
+  :root {
+    --flex-dir: column;
+  }
+}
+
+/* Global Styles: Basic styling for the entire document */
 html {
-  width: 100%;
-  font-family: "Share Tech Mono", monospace;
-  max-width: 100vw;
+  font-family: "Share Tech Mono", monospace; /* Font family */
+  max-width: 100vw; /* Prevent horizontal overflow */
   background-color: var(--bg-color);
   color: var(--color-txt);
 }
 
+body {
+  text-align: center;
+  padding-top: 24px;
+}
+
+/* Headings: Styling for all <h2> elements */
 h2 {
   font-size: 24px;
   font-weight: 600;
-  border-bottom: 1px solid var(--borders-color);
   padding: 8px;
   margin-bottom: 16px;
+  border-bottom: 1px solid var(--borders-color);
 }
 
-body {
+/* Main Wrapper: Container styling for main layout */
+.structure-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  flex-direction: var(--flex-dir);
+  text-align: left;
 }
 
+/* Section Styling */
 section {
-  box-shadow: 8px 4px 4px var(--shadows-colors);
+  width: 450px;
+  height: 500px;
   margin: 24px;
   padding: 24px;
-  border-radius: 16px;
   border: 1px solid var(--borders-color);
+  border-radius: 1rem;
+  box-shadow: 8px 4px 4px var(--shadows-colors);
 }
 
+/* Form Styling */
 form {
-  font-size: 16px;
   display: flex;
   flex-direction: column;
+  font-size: 16px;
 }
 
 .form-group {
@@ -70,16 +92,18 @@ form {
 .form-group input {
   flex: 1;
   padding: 8px;
-  border-radius: 4px;
   background-color: var(--input-colors);
   color: var(--color-txt);
-  border: 0px;
-}
-
-iframe {
   border: none;
+  border-radius: 4px;
 }
 
+/* Iframe Styling */
+iframe {
+  border: none; /* Removes border */
+}
+
+/* Size Group Styling */
 .size-group {
   display: flex;
   align-items: center;
@@ -97,60 +121,66 @@ iframe {
 
 .size-field input {
   width: 50px;
-  border-radius: 4px;
   background-color: var(--input-colors);
+  border-radius: 4px;
 }
 
+/* Styling for the '×' separator */
 .multiply {
   margin: 0 8px;
   font-size: 24px;
 }
 
+/* Code Blocks: Styling for code display */
+code {
+  background-color: var(--input-colors);
+  padding: 8px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
 
 pre {
   white-space: pre-wrap;
-  margin: 0px;
-}
-.result{
-  box-shadow: 8px 4px 4px var(--shadows-colors);
-  margin: 24px;
-  padding: 24px;
-  border-radius: 16px;
-  border: 1px solid var(--borders-color);
-  max-width: 50%;
-  display: flex;
-  flex-direction: column;
-  border-radius: 4px;
-  max-width: 600px;
+  margin: 0;
 }
 
-code {
-  background-color: var(--input-colors);
-  border-radius: 8px;
-  padding: 8px;
+code:hover .copy-button {
+  display: inline-block;
 }
-.copy-button {
-  position: relative;
+
+/* Result Section: Contains output display */
+.result {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Button Styling */
+button {
   cursor: pointer;
-  border: 0px;
+  background-color: var(--input-colors);
+  border: none;
   border-radius: 4px;
-  padding-bottom: 1px;
-  padding-bottom: 1px;
-  margin: 2px;
 }
+
+.copy-button {
+  display: none; /* Initially hidden */
+  margin: 2px;
+  position: absolute;
+  padding: 1px;
+}
+
 .copy-button:hover {
-background-color: var(--bg-color);
+  background-color: var(--bg-color);
 }
 
 .copy-button::after {
-  content: '';
+  content: ''; /* Tooltip content */
   display: none;
   position: absolute;
   top: -30px;
-  transform: translateX(-50%);
+  padding: 5px 10px;
   background-color: var(--color-txt);
   color: var(--bg-color);
-  padding: 5px 10px;
   border-radius: 4px;
   z-index: 1;
 }
@@ -160,8 +190,15 @@ background-color: var(--bg-color);
   content: 'Copied!';
 }
 
+/* Dark Mode Button Styling */
 #darkmode {
   position: absolute;
   top: 8px;
   left: 8px;
+}
+
+/* SVG Styling */
+img[type="svg"] {
+  margin-top: 2px;
+  filter: var(--filter);
 }
