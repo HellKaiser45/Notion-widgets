@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
       'width': document.getElementById('width').value,
       'height': document.getElementById('height').value
     });
-
     const urlWithParams = `https://hellkaiser45.github.io/Notion-widgets/simple-banner/index.html?${params.toString()}`;
     output.textContent = urlWithParams;
     iframe.src = urlWithParams;

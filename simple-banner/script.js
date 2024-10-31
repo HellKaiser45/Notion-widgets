@@ -55,6 +55,9 @@ function applyParameters(params) {
     if (key === 'font') {
       importGoogleFont(value);
     }
+    if (key === 'font-size') {
+      value=`${value}px`;
+    }
     if (key==='text'){
       const header = document.getElementById('headerText');
       header.textContent = value;
