@@ -1,0 +1,3 @@
+/banner-with-socials/*
+!/banner-with-socials/dist/
+!/banner-with-socials/dist/**

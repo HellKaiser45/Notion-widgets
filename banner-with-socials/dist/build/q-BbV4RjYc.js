@@ -1,0 +1,1 @@
+import{_ as o}from"./q-Ckxo4o86.js";import{b as e,q as a}from"./q-A292Ce-a.js";const i={title:"Notion Social Banner Generator",meta:[{name:"description",content:"Create customizable social media banners for your Notion pages. Choose colors, sizes, and add your social media links."}]},n=e(a(()=>o(()=>import("./q-CZkbu9No.js"),[]),"s_ncZEISzRXk4"));export{n as default,i as head};

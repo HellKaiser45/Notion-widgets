@@ -9,7 +9,10 @@
   --shadows-colors: rgba(0, 0, 0, 0.2); /* Shadow color */
   --filter: invert(0); /* Default filter */
   --flex-dir: row; /* Default flex direction */
+  --max-box-size: 60vw;
+  --items-align: start;
 }
+
 
 /* Dark Theme Variables: Overrides for dark mode */
 [data-theme="dark"] {
@@ -20,30 +23,35 @@
   --shadows-colors: rgba(255, 255, 255, 0.2);
   --filter: invert(1);
 }
-
-/* Responsive Flex Direction for smaller screens */
 @media (max-width: 1150px) {
   :root {
     --flex-dir: column;
+    --max-box-size: 75%;
+    --items-align: center;
   }
 }
 
-/* Global Styles: Basic styling for the entire document */
-html {
-  font-family: "Share Tech Mono", monospace; /* Font family */
-  max-width: 100vw; /* Prevent horizontal overflow */
-  background-color: var(--bg-color);
-  color: var(--color-txt);
+body{
+
 }
 
 body {
-  text-align: center;
+  align-items: center;
+  font-family: "Share Tech Mono", monospace; /* Font family */
+  background-color: var(--bg-color);
+  color: var(--color-txt);
+  display: flex;
+  flex-direction: column;
   padding-top: 24px;
 }
 
+h1{
+  margin: 8px;
+  font-size: 2em;
+}
 /* Headings: Styling for all <h2> elements */
 h2 {
-  font-size: 24px;
+  font-size: 1.5em;
   font-weight: 600;
   padding: 8px;
   margin-bottom: 16px;
@@ -53,7 +61,7 @@ h2 {
 /* Main Wrapper: Container styling for main layout */
 .structure-wrapper {
   display: flex;
-  align-items: center;
+  align-items: var(--items-align);
   justify-content: center;
   flex-direction: var(--flex-dir);
   text-align: left;
@@ -61,20 +69,26 @@ h2 {
 
 /* Section Styling */
 section {
-  width: 450px;
-  height: 500px;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  min-width: 200px;
   margin: 24px;
   padding: 24px;
   border: 1px solid var(--borders-color);
   border-radius: 1rem;
   box-shadow: 8px 4px 4px var(--shadows-colors);
+
+}
+.result-container{
+  max-width: var(--max-box-size);
 }
 
 /* Form Styling */
 form {
   display: flex;
   flex-direction: column;
-  font-size: 16px;
+  font-size: 1em;
 }
 
 .form-group {
@@ -82,19 +96,18 @@ form {
   align-items: center;
   margin: 8px 0;
 }
-
 .form-group label {
-  width: 200px;
   margin-right: 16px;
+  width: 6emx;
   text-align: right;
 }
 
 .form-group input {
-  flex: 1;
+  width: 5em;
   padding: 8px;
   background-color: var(--input-colors);
+  border: 1px solid var(--color-txt);
   color: var(--color-txt);
-  border: none;
   border-radius: 4px;
 }
 
@@ -106,30 +119,36 @@ iframe {
 /* Size Group Styling */
 .size-group {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
 }
 
 .size-field {
   display: flex;
+  width: 60px;
   align-items: center;
+  flex: 1;
 }
 
-.size-field label {
-  width: 100px;
-  text-align: right;
-}
-
-.size-field input {
-  width: 50px;
-  background-color: var(--input-colors);
-  border-radius: 4px;
-}
-
-/* Styling for the '×' separator */
 .multiply {
   margin: 0 8px;
   font-size: 24px;
 }
+.size-field:last-child {
+  margin-right: 0;
+}
+
+.size-field label {
+  width: 50px;
+  text-align: right;
+}
+
+.size-field input {
+  width: 32px;
+  background-color: var(--input-colors);
+  border-radius: 4px;
+}
+
+
 
 /* Code Blocks: Styling for code display */
 code {
@@ -142,6 +161,39 @@ code {
 pre {
   white-space: pre-wrap;
   margin: 0;
+}
+
+.helper {
+    visibility: hidden;
+    background-color: var(--input-colors);
+    color: var(--color-txt);
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 100%; /* Adjust position as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.label-container {
+    position: relative;
+    display: inline-block;
+}
+
+.label-container:hover .helper {
+  visibility: visible;
+  opacity: 1;
+}
+
+ .helper:hover{
+  background-color: var(--input-colors);
+  display: block;
+  content: 'Hello';
+  width: 60;
 }
 
 code:hover .copy-button {
