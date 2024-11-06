@@ -1,1 +1,0 @@
-import{B as r}from"./q-CaXLxjU0.js";import{d as s,k as n}from"./q-A292Ce-a.js";import"./q-Ckxo4o86.js";const l=()=>s("div",null,{class:"min-h-screen flex justify-center"},n(r,null,3,"i8_0"),1,"i8_1");export{l as s_B0lqk5IDDy4};

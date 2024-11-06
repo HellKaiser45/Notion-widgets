@@ -1,0 +1,16 @@
+# Ignore development files and directories
+.eslintignore
+.gitignore
+.prettierignore
+.prettierrc.js
+bun.lockb
+# postcss.config.cjs
+README.md
+server/
+tmp/
+.vscode/
+# Ignore build artifacts
+dist/
+node_modules/
+qwick.env.d.ts
+.gitignore

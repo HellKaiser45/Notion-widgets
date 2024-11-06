@@ -1,1 +1,0 @@
-import{_ as o}from"./q-Ckxo4o86.js";import{b as t,q as e}from"./q-A292Ce-a.js";const n=t(e(()=>o(()=>import("./q-CV72JjCA.js"),[]),"s_B0lqk5IDDy4")),r={title:"Social Banner",meta:[{name:"description",content:"Customizable social media banner with icons"}]};export{n as default,r as head};
