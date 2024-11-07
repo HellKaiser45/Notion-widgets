@@ -45,7 +45,6 @@ Development mode uses [Vite's development server](https://vitejs.dev/). The `dev
 ```shell
 npm start # or `bun start`
 ```
-
 > Note: during dev mode, Vite may request a significant number of `.js` files. This does not represent a Qwik production build.
 
 ## Preview
