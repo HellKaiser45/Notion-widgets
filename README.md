@@ -47,22 +47,6 @@ I recommend one of these options several options:
 
 2. [Using Personal Access Token (PAT)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens):
 
-## 📤 Pushing Your Code to GitHub
-
-1. After making changes, stage and commit them:
-
-   ```bash
-   git add .
-   git commit -m "Initial widget setup"
-   ```
-
-2. Push your changes to GitHub:
-
-   ```bash
-   git push origin main
-   ```
-
-3. Git may prompt for authentication if it hasn’t been done already. Follow the appropriate steps based on your setup (GitHub CLI, SSH, or PAT).
 
 ## 🌐 Deploying Widgets on GitHub Pages
 
