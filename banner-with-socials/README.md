@@ -31,7 +31,6 @@ Inside your project, you'll see the following directory structure:
 - `public`: Any static assets, like images, can be placed in the public directory. Please see the [Vite public directory](https://vitejs.dev/guide/assets.html#the-public-directory) for more info.
 
 ## Add Integrations and deployment
-
 Use the `bun qwik add` command to add additional integrations. Some examples of integrations includes: Cloudflare, Netlify or Express Server, and the [Static Site Generator (SSG)](https://qwik.dev/qwikcity/guides/static-site-generation/).
 
 ```shell
@@ -39,7 +38,6 @@ bun qwik add # or `bun qwik add`
 ```
 
 ## Development
-
 Development mode uses [Vite's development server](https://vitejs.dev/). The `dev` command will server-side render (SSR) the output during development.
 
 ```shell
@@ -48,7 +46,6 @@ npm start # or `bun start`
 > Note: during dev mode, Vite may request a significant number of `.js` files. This does not represent a Qwik production build.
 
 ## Preview
-
 The preview command will create a production build of the client modules, a production build of `src/entry.preview.tsx`, and run a local server. The preview server is only for convenience to preview a production build locally and should not be used as a production server.
 
 ```shell
