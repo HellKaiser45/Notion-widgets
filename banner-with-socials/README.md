@@ -58,7 +58,6 @@ bun build # or `bun build`
 ```
 
 ## Static Site Generator (Node.js)
-
 ```shell
 bun build.server
 ```
