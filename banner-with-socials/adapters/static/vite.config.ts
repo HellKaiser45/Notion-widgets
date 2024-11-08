@@ -2,7 +2,11 @@ import { staticAdapter } from "@builder.io/qwik-city/adapters/static/vite";
 import { extendConfig } from "@builder.io/qwik-city/vite";
 import baseConfig from "../../vite.config";
 
-const origin = process.env.SITE_ORIGIN || "http://localhost";
+const origin = process.env.SITE_ORIGIN;
+
+if (!origin) {
+  throw new Error('SITE_ORIGIN environment variable must be set');
+}
 
 export default extendConfig(baseConfig, () => {
   return {
@@ -14,7 +18,7 @@ export default extendConfig(baseConfig, () => {
     },
     plugins: [
       staticAdapter({
-        origin: 'http://' + origin,
+        origin: origin,
       }),
     ],
   };

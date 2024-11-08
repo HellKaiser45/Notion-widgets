@@ -1,37 +1,40 @@
 # syntax=docker/dockerfile:1.2
-FROM node:22.11 AS builder
+FROM ubuntu:latest
 
+# Update and install necessary tools
+RUN apt-get update && \
+  apt-get install -y \
+  curl \
+  nginx \
+  gettext-base \
+  unzip
+
+# Install Node.js and npm
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
+  apt-get install -y nodejs
+
+# Install bun
 RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/root/.bun/bin:${PATH}"
 
-ARG SITE_ORIGIN=localhost
-ENV SITE_ORIGIN=$SITE_ORIGIN
+# Verify bun installation
+RUN ln -s /root/.bun/bin/bun /usr/local/bin/bun
 
 WORKDIR /app
+
+# Copy project files
 COPY . .
 
-# RUN echo "SITE_ORIGIN=$SITE_ORIGIN" > .env
+# Install dependencies and build
 RUN bun install
-RUN bun run build.client
-RUN bun run build.server
 
-FROM nginx:alpine
+# Create an entrypoint script to handle nginx configuration
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-ARG SITE_ORIGIN=localhost
-ENV SITE_ORIGIN=$SITE_ORIGIN
+# Prepare nginx configuration template
+COPY my-nginx.conf /etc/nginx/conf.d/default.conf.template
 
-RUN rm -rf /var/www/html/*
-RUN rm /etc/nginx/conf.d/default.conf
+EXPOSE 80
 
-COPY --from=builder /app/dist /var/www/html/
-COPY --from=builder /app/my-nginx.conf /etc/nginx/conf.d/default.conf.template
-
-# Install gettext for envsubst
-RUN apk add --no-cache gettext
-
-# Use envsubst to substitute the SITE_ORIGIN environment variable
-RUN envsubst '$SITE_ORIGIN' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
-
-RUN rm /etc/nginx/conf.d/default.conf.template
-
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/entrypoint.sh"]
