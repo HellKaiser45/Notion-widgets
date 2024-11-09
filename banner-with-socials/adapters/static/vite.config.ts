@@ -18,7 +18,7 @@ export default extendConfig(baseConfig, () => {
     },
     plugins: [
       staticAdapter({
-        origin: origin,
+        origin: 'https://' + origin,
       }),
     ],
   };
