@@ -329,6 +329,7 @@ export default component$(() => {
           </div>
         </div>
       </div>
+      <footer class="flex w-full justify-center items-center mt-6 text-sm text-center text-neutral-content" >Made with ❤️ by&nbsp;<a href="https://github.com/HellKaiser45" target="_blank" rel="noopener noreferrer">HellKaiser45</a></footer>
     </div>
   );
 });
