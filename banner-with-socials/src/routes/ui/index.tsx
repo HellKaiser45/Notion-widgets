@@ -36,7 +36,7 @@ export default component$(() => {
         if (url?.trim()) {
           params.set(platform, url);
         } else {
-          params.set(platform, '.');
+          params.set(platform, '-');
         }
       }
     });
@@ -329,6 +329,6 @@ export default component$(() => {
           </div>
         </div>
       </div>
-      </div>
+    </div>
   );
 });
