@@ -59,6 +59,16 @@ export const SOCIAL_PLATFORMS = {
 
 export type SocialPlatform = keyof typeof SOCIAL_PLATFORMS;
 
+// URL validation function
+const isValidUrl = (url: string): boolean => {
+  try {
+    const parsedUrl = new URL(url);
+    return ['http:', 'https:'].includes(parsedUrl.protocol);
+  } catch {
+    return false;
+  }
+};
+
 export default component$(() => {
   const bgColorSignal = useSignal('transparent');
   const iconColorSignal = useSignal('#000000');
@@ -70,10 +80,8 @@ export default component$(() => {
     alt: string
   }>>([]);
 
-
-
   // Use useVisibleTask$ to initialize and update signals
-  useOnDocument("DOMContentLoaded",$(() => {
+  useOnDocument("DOMContentLoaded", $(() => {
 
     // Parse parameters from location
     const params = new URLSearchParams(window.location.search);
@@ -125,21 +133,37 @@ export default component$(() => {
               // Dynamically select the icon component
               const IconComponent = (Icons as any)[social.iconName];
 
+              // Check if URL is valid
+              const isClickable = isValidUrl(social.url);
+
               return (
                 <li key={social.platform} class="flex">
-                  <a
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.alt}
-                    class="transform transition-transform duration-200 hover:scale-110 flex p-2"
-                  >
-                    <IconComponent
-                      width={iconSizeSignal.value}
-                      height={iconSizeSignal.value}
-                      fill={iconColorSignal.value}
-                    />
-                  </a>
+                  {isClickable ? (
+                    <a
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.alt}
+                      class="transform transition-transform duration-200 hover:scale-110 flex p-2"
+                    >
+                      <IconComponent
+                        width={iconSizeSignal.value}
+                        height={iconSizeSignal.value}
+                        fill={iconColorSignal.value}
+                      />
+                    </a>
+                  ) : (
+                    <span
+                      class="flex p-2 opacity-50 cursor-not-allowed"
+                      title="No valid URL provided"
+                    >
+                      <IconComponent
+                        width={iconSizeSignal.value}
+                        height={iconSizeSignal.value}
+                        fill={iconColorSignal.value}
+                      />
+                    </span>
+                  )}
                 </li>
               );
             })}

@@ -229,7 +229,7 @@ export default component$(() => {
                     </label>
                     {showSocialInputs.value[platform] && (
                       <div class="mt-2">
-                        <span class="text-sm opacity-70 mb-2 block">Optional: Add URL to make icon clickable</span>
+                        <span class="text-sm opacity-70 mb-2 block">Optional: Add your social URL to make icon clickable</span>
                         <label for={`${platform}-url`} class="sr-only">{`${alt} URL`}</label>
                         <input
                           id={`${platform}-url`}
