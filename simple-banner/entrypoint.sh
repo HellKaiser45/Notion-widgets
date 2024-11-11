@@ -10,10 +10,10 @@ export SITE_ORIGIN
 # Prepare nginx configuration
 envsubst '$SITE_ORIGIN' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
 
-# Copy built files to nginx directory
+# Copy project files to nginx directory
 rm -rf /var/www/html/*
-rm -rf /etc/nginx/conf.d/default.conf.tenplate
-cp -r dist/* /var/www/html/
+rm -rf /etc/nginx/conf.d/default.conf.template
+cp -r . /var/www/html/
 
 # Start nginx
 exec nginx -g "daemon off;"

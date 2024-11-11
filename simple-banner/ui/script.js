@@ -6,6 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const darkModeToggle = document.getElementById('darkmode');
   const svgDarkMode = document.getElementById('svgDarkmode');
 
+  // Dynamically retrieve base URL from current page location
+  const BASE_URL = `${window.location.origin}`;
+
+  console.log('Dynamically retrieved Base URL:', BASE_URL);
+
   /**
    * Removes the leading hash from a hex color string if present.
    * @param {string} color - The color string to process.
@@ -28,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'width': document.getElementById('width').value,
       'height': document.getElementById('height').value
     });
-    const urlWithParams = `https://hellkaiser45.github.io/Notion-widgets/simple-banner/index.html?${params.toString()}`;
+    const urlWithParams = `${BASE_URL}?${params.toString()}`;
     output.textContent = urlWithParams;
     iframe.src = urlWithParams;
     iframe.style.width = `${params.get('width')}px`;
@@ -36,9 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     iframeCode.textContent = `<iframe src="${urlWithParams}" style="width: ${params.get('width')}px; height: ${params.get('height')}px; border: none;"></iframe>`;
   };
 
-  /**
-   * Attaches input and change event listeners to all input elements in the form to trigger URL updates.
-   */
+  // Rest of the code remains the same...
   form.querySelectorAll('input').forEach(input => {
     input.addEventListener('input', updateURL);
     input.addEventListener('change', updateURL);
