@@ -4,13 +4,13 @@ FROM nginx:alpine
 RUN apk add --no-cache gettext bash
 
 # Copy project files
-COPY .. /tmp/project/
+COPY . /tmp/project/
 
 # Copy nginx configuration template
-COPY ../config/nginx/my-nginx.conf /etc/nginx/conf.d/default.conf.template
+COPY config/nginx/my-nginx.conf /etc/nginx/conf.d/default.conf.template
 
 # Copy sitemap generation script
-COPY ../scripts/generate_sitemap.sh /generate_sitemap.sh
+COPY scripts/generate_sitemap.sh /generate_sitemap.sh
 RUN chmod +x /generate_sitemap.sh
 
 # Copy entrypoint script
