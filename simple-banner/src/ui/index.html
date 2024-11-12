@@ -3,29 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create custom headers for Notion pages with this easy-to-use generator">
+  <meta name="keywords" content="notion, header, generator, customization, widget">
+
   <title>URL Builder</title>
-  <!-- Include jscolor Library via CDN for reliability -->
-  <script src="jscolor.js"></script>
-  <link rel="stylesheet" href="style.css">
+
+  <!-- Simplified Font Loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Defer non-critical scripts -->
+  <script src="/assets/js/jscolor.min.js" async type="module"></script>
+
+  <!-- CSS loaded after critical meta tags -->
+  <link rel="stylesheet" href="/assets/css/ui.css">
 </head>
 <body>
   <button type="button" id="darkmode">
-    <img id="svgDarkmode" type="svg" src="https://api.iconify.design/line-md:moon-rising-twotone-loop.svg" alt="Toggle Dark Mode">
+    <img id="svgDarkmode" height="16" width="16" type="svg" src="https://api.iconify.design/line-md:moon-rising-twotone-loop.svg" alt="Toggle Dark Mode">
   </button>
 
   <h1>Header Generator for Notion</h1>
   <div>
   <a href="https://github.com/HellKaiser45/Notion-widgets" target="_blank" rel="noopener noreferrer">
-    <img  alt="View on Github" src="https://img.shields.io/badge/View%20on%20Github-white?logo=github&logoColor=black">
+    <img width="113" height="20"  alt="View on Github" src="https://img.shields.io/badge/View%20on%20Github-white?logo=github&logoColor=black">
   </a>
   <a href="https://linktr.ee/julienJDE" target="_blank" rel="noopener noreferrer">
-    <img  alt="My socials" src="https://img.shields.io/badge/My%20socials-white?logo=linktree">
+    <img width="85" height="20"  alt="My socials" src="https://img.shields.io/badge/My%20socials-white?logo=linktree">
   </a>
   <a href="https://www.twitch.tv/julienjde" target="_blank" rel="noopener noreferrer">
-    <img  alt="Twitch Status" src="https://img.shields.io/twitch/status/julienJDE">
+    <img width="110" height="20"  alt="Twitch Status" src="https://img.shields.io/twitch/status/julienJDE">
   </a>
 </div>
-
 
   <div class="structure-wrapper">
     <section>
@@ -54,7 +63,7 @@
         <div class="form-group">
           <label class="label-container" for="font">Font:
             <div class="helper">Use any google font <br> just paste the name</div>
-            <image class="help" type="svg" src="https://api.iconify.design/material-symbols:help-outline.svg"></image>
+            <img width="16" height="16" alt="how to change font" class="help" type="svg" src="https://api.iconify.design/material-symbols:help-outline.svg"></img>
           </label>
           <input type="text" id="font" name="font" value="Orbitron" required>
         </div>
@@ -85,7 +94,7 @@
 <div class="result-container">
     <section  class="preview">
       <h2>Preview</h2>
-      <iframe id="live-preview" style="width: 100%; height: 500px;"></iframe>
+      <iframe title="live preview" loading="lazy" id="live-preview" style="width: 100%; height: 500px;"></iframe>
     </section>
 
     <section class="result">
@@ -108,6 +117,6 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="/assets/js/ui.js" defer type="module"></script>
 </body>
 </html>

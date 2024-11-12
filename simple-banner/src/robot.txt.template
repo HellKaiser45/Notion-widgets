@@ -1,14 +1,10 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://${SITE_ORIGIN}/sitemap.xml
 
 # Crawl-delay directive
 Crawl-delay: 10
-
-# Specific directory restrictions
-Disallow: /private/
-Disallow: /admin/
 
 # Search engine specific rules
 User-agent: Googlebot

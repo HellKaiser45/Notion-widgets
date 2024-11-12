@@ -4,8 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Example Header</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+
+  <!-- Defer non-critical CSS -->
+  <link rel="stylesheet" href="/assets/css/main.css" media="print" onload="this.media='all'">
+
+  <!-- Defer non-critical JavaScript -->
+  <script src="/assets/js/main.js" defer type="module"></script>
 </head>
 <body id="svgContainer">
   <header class="header-bloc">

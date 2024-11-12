@@ -2,13 +2,20 @@
 
 /* Root Variables: Define the main color scheme and layout settings */
 :root {
-  --bg-color: #ffffff; /* Background color */
-  --borders-color: #454c54; /* Border color */
-  --color-txt: #000000; /* Text color */
-  --input-colors: #e6eaef; /* Input background color */
-  --shadows-colors: rgba(0, 0, 0, 0.2); /* Shadow color */
-  --filter: invert(0); /* Default filter */
-  --flex-dir: row; /* Default flex direction */
+  --bg-color: #ffffff;
+  /* Background color */
+  --borders-color: #454c54;
+  /* Border color */
+  --color-txt: #000000;
+  /* Text color */
+  --input-colors: #e6eaef;
+  /* Input background color */
+  --shadows-colors: rgba(0, 0, 0, 0.2);
+  /* Shadow color */
+  --filter: invert(0);
+  /* Default filter */
+  --flex-dir: row;
+  /* Default flex direction */
   --max-box-size: 60vw;
   --items-align: start;
 }
@@ -23,6 +30,7 @@
   --shadows-colors: rgba(255, 255, 255, 0.2);
   --filter: invert(1);
 }
+
 @media (max-width: 1150px) {
   :root {
     --flex-dir: column;
@@ -31,13 +39,12 @@
   }
 }
 
-body{
-
-}
+body {}
 
 body {
   align-items: center;
-  font-family: "Share Tech Mono", monospace; /* Font family */
+  font-family: "Share Tech Mono", monospace;
+  /* Font family */
   background-color: var(--bg-color);
   color: var(--color-txt);
   display: flex;
@@ -45,10 +52,11 @@ body {
   padding-top: 24px;
 }
 
-h1{
+h1 {
   margin: 8px;
   font-size: 2em;
 }
+
 /* Headings: Styling for all <h2> elements */
 h2 {
   font-size: 1.5em;
@@ -80,7 +88,8 @@ section {
   box-shadow: 8px 4px 4px var(--shadows-colors);
 
 }
-.result-container{
+
+.result-container {
   max-width: var(--max-box-size);
 }
 
@@ -96,6 +105,7 @@ form {
   align-items: center;
   margin: 8px 0;
 }
+
 .form-group label {
   margin-right: 16px;
   width: 6emx;
@@ -113,7 +123,8 @@ form {
 
 /* Iframe Styling */
 iframe {
-  border: none; /* Removes border */
+  border: none;
+  /* Removes border */
 }
 
 /* Size Group Styling */
@@ -133,6 +144,7 @@ iframe {
   margin: 0 8px;
   font-size: 24px;
 }
+
 .size-field:last-child {
   margin-right: 0;
 }
@@ -164,24 +176,26 @@ pre {
 }
 
 .helper {
-    visibility: hidden;
-    background-color: var(--input-colors);
-    color: var(--color-txt);
-    text-align: center;
-    padding: 5px;
-    border-radius: 5px;
-    position: absolute;
-    bottom: 100%; /* Adjust position as needed */
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 0.3s;
+  visibility: hidden;
+  background-color: var(--input-colors);
+  color: var(--color-txt);
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 100%;
+  /* Adjust position as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s;
 }
+
 .label-container {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .label-container:hover .helper {
@@ -189,7 +203,7 @@ pre {
   opacity: 1;
 }
 
- .helper:hover{
+.helper:hover {
   background-color: var(--input-colors);
   display: block;
   content: 'Hello';
@@ -215,7 +229,8 @@ button {
 }
 
 .copy-button {
-  display: none; /* Initially hidden */
+  display: none;
+  /* Initially hidden */
   margin: 2px;
   position: absolute;
   padding: 1px;
@@ -226,7 +241,8 @@ button {
 }
 
 .copy-button::after {
-  content: ''; /* Tooltip content */
+  content: '';
+  /* Tooltip content */
   display: none;
   position: absolute;
   top: -30px;
