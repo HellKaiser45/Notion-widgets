@@ -1,13 +1,18 @@
 #!/bin/sh
 set -e
 
-# Ensure SITE_ORIGIN is set, exit if not provided
+# Enhanced logging
+log() {
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*"
+}
+
+# Validate SITE_ORIGIN
 if [ -z "$SITE_ORIGIN" ]; then
-    echo "Error: SITE_ORIGIN environment variable must be set"
+    log "Error: SITE_ORIGIN environment variable must be set"
     exit 1
 fi
 
-# Export all variables needed for the sitemap generator
+# Provide defaults for sitemap-related variables
 export SITE_ORIGIN
 export SITEMAP_PATH=${SITEMAP_PATH:-"/var/www/html/sitemap.xml"}
 export SITEMAP_FREQUENCY=${SITEMAP_FREQUENCY:-"daily"}
@@ -18,36 +23,64 @@ export SITEMAP_TIMEOUT=${SITEMAP_TIMEOUT:-"10"}
 export SITEMAP_USER_AGENT=${SITEMAP_USER_AGENT:-"SitemapGenerator/1.0"}
 
 # Prepare nginx configuration
+log "Preparing nginx configuration"
 envsubst '$SITE_ORIGIN' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
 
-# Clean up existing files
+# Prepare web root
+log "Preparing web root"
 rm -rf /var/www/html/*
 rm -rf /etc/nginx/conf.d/default.conf.template
+cp -rv /tmp/project/src/* /var/www/html/
 
-# Copy ALL contents of src directly to web root
-cp -r /tmp/project/src/* /var/www/html/
-
+# Handle robots.txt template
 if [ -f "/var/www/html/robots.txt.template" ]; then
+    log "Processing robots.txt template"
     envsubst '$SITE_ORIGIN' < /var/www/html/robots.txt.template > /var/www/html/robots.txt
     rm /var/www/html/robots.txt.template
 fi
 
 # Ensure correct permissions
+log "Setting file permissions"
 chmod -R 755 /var/www/html
+chmod +x /usr/local/bin/sitemap_generator.py
 
-# Start nginx
-exec nginx -g "daemon off;"
+# Graceful nginx configuration check
+log "Checking nginx configuration"
+nginx -t || {
+    log "ERROR: Nginx configuration test failed"
+    exit 1
+}
 
+# Start nginx in background for initial setup
+log "Starting nginx in background"
+nginx
+
+# Wait briefly to ensure nginx starts
+sleep 2
 
 # Setup cron job for sitemap generation
-echo "0 0 * * * /usr/local/bin/sitemap_generator.py" > /etc/cron.d/sitemap-generator
+log "Setting up cron job for sitemap generation"
+echo "0 0 * * * python3 /usr/local/bin/sitemap_generator.py" > /etc/cron.d/sitemap-generator
 chmod 0644 /etc/cron.d/sitemap-generator
+
 # Start cron
+log "Starting cron"
 cron
 
 # Generate initial sitemap
-/usr/local/bin/sitemap_generator.py
+log "Generating initial sitemap"
+python3 /usr/local/bin/sitemap_generator.py || {
+    log "ERROR: Sitemap generation failed"
+    exit 1
+}
 
-# Print contents of web root for debugging
-echo "Web root contents:"
-ls -la /var/www/html
+# Gracefully stop background nginx
+log "Stopping background nginx"
+nginx -s quit
+
+# Wait a moment to ensure clean shutdown
+sleep 2
+
+# Start nginx in foreground
+log "Starting nginx in foreground"
+exec nginx -g "daemon off;"

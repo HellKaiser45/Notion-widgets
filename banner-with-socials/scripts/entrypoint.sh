@@ -8,6 +8,7 @@ if [ -z "$SITE_ORIGIN" ]; then
 fi
 
 # Provide defaults for other sitemap-related variables
+export SITE_ORIGIN
 export SITEMAP_PATH=${SITEMAP_PATH:-"/var/www/html/sitemap.xml"}
 export SITEMAP_FREQUENCY=${SITEMAP_FREQUENCY:-"daily"}
 export SITEMAP_PRIORITY=${SITEMAP_PRIORITY:-"0.8"}
@@ -25,6 +26,7 @@ envsubst '$SITE_ORIGIN' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/c
 
 # Prepare web root
 rm -rf /var/www/html/*
+rm -rf /etc/nginx/conf.d/default.conf.template
 cp -r dist/* /var/www/html/
 
 # Handle robots.txt template
@@ -36,7 +38,7 @@ fi
 chmod -R 755 /var/www/html
 
 # Start nginx
-exec nginx -g "daemon off;"
+nginx
 
 # Setup cron job for sitemap generation
 echo "0 0 * * * /usr/local/bin/sitemap_generator.py" > /etc/cron.d/sitemap-generator
@@ -48,6 +50,11 @@ cron
 # Generate initial sitemap
 /usr/local/bin/sitemap_generator.py
 
-# Print contents of web root for debugging
-echo "Web root contents:"
-ls -la /var/www/html
+# Gracefully stop background nginx
+
+nginx -s quit
+
+# Wait a moment to ensure clean shutdown
+sleep 2
+
+exec nginx -g "daemon off;"
