@@ -56,6 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const formData = new FormData(elements.form);
     const params = new URLSearchParams();
 
+    // Explicitly add text parameter
+    const textInput = document.getElementById('text');
+    if (textInput) {
+      params.append('text', textInput.value);
+    }
+
     for (const [key, value] of formData.entries()) {
       params.append(key, value.startsWith('#') ? value.substring(1) : value);
     }
