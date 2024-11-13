@@ -36,8 +36,11 @@ fi
 chmod -R 755 /var/www/html
 
 # Setup cron job for sitemap generation
-echo "0 0 * * * /usr/local/bin/sitemap_generator.py" > /etc/crontabs/root
-crond -b
+echo "0 0 * * * /usr/local/bin/sitemap_generator.py" > /etc/cron.d/sitemap-generator
+chmod 0644 /etc/cron.d/sitemap-generator
+
+# Start cron
+cron
 
 # Generate initial sitemap
 /usr/local/bin/sitemap_generator.py

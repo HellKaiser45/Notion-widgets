@@ -10,7 +10,7 @@ RUN apt-get update && \
   unzip \
   python3 \
   python3-pip \
-  dcron && \
+  cron && \
   pip3 install --no-cache-dir --break-system-packages requests beautifulsoup4
 
 # Install Node.js and npm
