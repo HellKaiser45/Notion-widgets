@@ -1,22 +1,34 @@
 #!/usr/bin/env python3
 
+import os
+import sys
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 from datetime import datetime
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
-import os
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
+
+# Validate required environment variables
+site_origin = os.environ.get('SITE_ORIGIN')
+if not site_origin:
+    logging.error("Error: SITE_ORIGIN environment variable is not set.")
+    print("Please set the SITE_ORIGIN environment variable to the base URL of your website (e.g., 'example.com').")
+    sys.exit(1)
 
 # Configuration Parameters
-BASE_URL = os.environ.get('SITE_ORIGIN')
-OUTPUT_PATH = os.environ.get('SITEMAP_PATH')
-FREQUENCY = os.environ.get('SITEMAP_FREQUENCY')
-PRIORITY = float(os.environ.get('SITEMAP_PRIORITY'))
-EXCLUDE_PATHS = os.environ.get('SITEMAP_EXCLUDE_PATHS').split(',')
-EXCLUDE_EXTENSIONS = os.environ.get('SITEMAP_EXCLUDE_EXTENSIONS').split(',')
-REQUEST_TIMEOUT = int(os.environ.get('SITEMAP_TIMEOUT'))
-USER_AGENT = os.environ.get('SITEMAP_USER_AGENT')
+BASE_URL = f'http://{site_origin}'
+OUTPUT_PATH = os.environ.get('SITEMAP_PATH', '/var/www/html/sitemap.xml')
+FREQUENCY = os.environ.get('SITEMAP_FREQUENCY', 'daily')
+PRIORITY = float(os.environ.get('SITEMAP_PRIORITY', '0.8'))
+EXCLUDE_PATHS = os.environ.get('SITEMAP_EXCLUDE_PATHS', '/admin/,/login/,/private/').split(',')
+EXCLUDE_EXTENSIONS = os.environ.get('SITEMAP_EXCLUDE_EXTENSIONS', '.pdf,.jpg,.png,.gif').split(',')
+REQUEST_TIMEOUT = int(os.environ.get('SITEMAP_TIMEOUT', '10'))
+USER_AGENT = os.environ.get('SITEMAP_USER_AGENT', 'SitemapGenerator/1.0')
 
 class SitemapGenerator:
     def __init__(self):
@@ -28,20 +40,20 @@ class SitemapGenerator:
         parsed = urlparse(url)
 
         # Check if URL is from the same domain
-        if parsed.netloc and parsed.netloc not in BASE_URL:
+        if parsed.netloc and parsed.netloc != urlparse(BASE_URL).netloc:
             return False
 
         # Check excluded paths
-        if any(excluded in parsed.path for excluded in EXCLUDE_PATHS):
+        if any(excluded.strip() in parsed.path for excluded in EXCLUDE_PATHS):
             return False
 
         # Check excluded extensions
-        if any(parsed.path.endswith(ext) for ext in EXCLUDE_EXTENSIONS):
+        if any(parsed.path.endswith(ext.strip()) for ext in EXCLUDE_EXTENSIONS):
             return False
 
         return True
 
-    def crawl(self, url):
+    def crawl(self, url, depth=0):
         """Crawl website recursively"""
         if url in self.urls:
             return
@@ -49,9 +61,11 @@ class SitemapGenerator:
         try:
             response = requests.get(url, headers=self.headers, timeout=REQUEST_TIMEOUT)
             if response.status_code != 200:
+                logging.info(f"Skipping URL {url} (Status code: {response.status_code})")
                 return
 
             self.urls.add(url)
+            logging.info(f"Crawled URL: {url}")
 
             # Parse HTML content
             soup = BeautifulSoup(response.text, 'html.parser')
@@ -62,10 +76,12 @@ class SitemapGenerator:
                 full_url = urljoin(url, href)
 
                 if self.is_valid_url(full_url):
-                    self.crawl(full_url)
+                    self.crawl(full_url, depth + 1)
 
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Error crawling {url}: {e}")
         except Exception as e:
-            print(f"Error crawling {url}: {e}")
+            logging.error(f"Unexpected error crawling {url}: {e}")
 
     def generate_sitemap(self):
         """Generate sitemap XML"""
@@ -94,14 +110,23 @@ class SitemapGenerator:
         xml_str = minidom.parseString(ET.tostring(urlset)).toprettyxml(indent="  ")
 
         # Save sitemap
-        with open(OUTPUT_PATH, 'w', encoding='utf-8') as f:
-            f.write(xml_str)
+        try:
+            with open(OUTPUT_PATH, 'w', encoding='utf-8') as f:
+                f.write(xml_str)
+            logging.info(f"Sitemap generated successfully at {OUTPUT_PATH}")
+        except Exception as e:
+            logging.error(f"Error writing sitemap: {e}")
 
 def main():
+    # Ensure BASE_URL has a scheme
+    if not BASE_URL.startswith(('http://', 'https://')):
+        base_url = f'http://{BASE_URL}'
+    else:
+        base_url = BASE_URL
+
     generator = SitemapGenerator()
-    generator.crawl(BASE_URL)
+    generator.crawl(base_url)
     generator.generate_sitemap()
-    print(f"Sitemap generated successfully at {OUTPUT_PATH}")
 
 if __name__ == "__main__":
     main()
