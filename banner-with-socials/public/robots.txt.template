@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://${SITE_ORIGIN}/sitemap.xml
+
+# Crawl-delay directive
+Crawl-delay: 10
+
+# Search engine specific rules
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /

@@ -7,7 +7,11 @@ RUN apt-get update && \
   curl \
   nginx \
   gettext-base \
-  unzip
+  unzip \
+  python3 \
+  python3-pip \
+  dcron && \
+  pip3 install --no-cache-dir --break-system-packages requests beautifulsoup4
 
 # Install Node.js and npm
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
@@ -25,16 +29,22 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
-# Install dependencies and build
+# Install dependencies (but do not build)
 RUN bun install
 
-# Create an entrypoint script to handle nginx configuration
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Copy scripts and set permissions
+COPY scripts/entrypoint.sh /entrypoint.sh
+COPY scripts/sitemap_generator.py /usr/local/bin/sitemap_generator.py
+RUN chmod +x /entrypoint.sh /usr/local/bin/sitemap_generator.py
 
 # Prepare nginx configuration template
-COPY my-nginx.conf /etc/nginx/conf.d/default.conf.template
+COPY config/nginx/my-nginx.conf /etc/nginx/conf.d/default.conf.template
 
+# Set environment variables for Python
+ENV PYTHONUNBUFFERED=1
+
+# Expose web port
 EXPOSE 80
 
+# Set entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
