@@ -35,6 +35,9 @@ fi
 # Ensure correct permissions
 chmod -R 755 /var/www/html
 
+# Start nginx
+exec nginx -g "daemon off;"
+
 # Setup cron job for sitemap generation
 echo "0 0 * * * /usr/local/bin/sitemap_generator.py" > /etc/cron.d/sitemap-generator
 chmod 0644 /etc/cron.d/sitemap-generator
@@ -48,6 +51,3 @@ cron
 # Print contents of web root for debugging
 echo "Web root contents:"
 ls -la /var/www/html
-
-# Start nginx
-exec nginx -g "daemon off;"

@@ -8,14 +8,20 @@ from urllib.parse import urljoin, urlparse
 from datetime import datetime
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 
 # Validate required environment variables
-if not os.environ.get('SITE_ORIGIN'):
-    print("Error: SITE_ORIGIN environment variable is not set.", file=sys.stderr)
+site_origin = os.environ.get('SITE_ORIGIN')
+if not site_origin:
+    logging.error("Error: SITE_ORIGIN environment variable is not set.")
+    print("Please set the SITE_ORIGIN environment variable to the base URL of your website (e.g., 'example.com').")
     sys.exit(1)
 
 # Configuration Parameters
-BASE_URL = os.environ.get('SITE_ORIGIN')
+BASE_URL = f'http://{site_origin}'
 OUTPUT_PATH = os.environ.get('SITEMAP_PATH', '/var/www/html/sitemap.xml')
 FREQUENCY = os.environ.get('SITEMAP_FREQUENCY', 'daily')
 PRIORITY = float(os.environ.get('SITEMAP_PRIORITY', '0.8'))
@@ -34,7 +40,7 @@ class SitemapGenerator:
         parsed = urlparse(url)
 
         # Check if URL is from the same domain
-        if parsed.netloc and parsed.netloc not in urlparse(BASE_URL).netloc:
+        if parsed.netloc and parsed.netloc != urlparse(BASE_URL).netloc:
             return False
 
         # Check excluded paths
@@ -47,7 +53,7 @@ class SitemapGenerator:
 
         return True
 
-    def crawl(self, url):
+    def crawl(self, url, depth=0):
         """Crawl website recursively"""
         if url in self.urls:
             return
@@ -55,9 +61,11 @@ class SitemapGenerator:
         try:
             response = requests.get(url, headers=self.headers, timeout=REQUEST_TIMEOUT)
             if response.status_code != 200:
+                logging.info(f"Skipping URL {url} (Status code: {response.status_code})")
                 return
 
             self.urls.add(url)
+            logging.info(f"Crawled URL: {url}")
 
             # Parse HTML content
             soup = BeautifulSoup(response.text, 'html.parser')
@@ -68,10 +76,12 @@ class SitemapGenerator:
                 full_url = urljoin(url, href)
 
                 if self.is_valid_url(full_url):
-                    self.crawl(full_url)
+                    self.crawl(full_url, depth + 1)
 
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Error crawling {url}: {e}")
         except Exception as e:
-            print(f"Error crawling {url}: {e}", file=sys.stderr)
+            logging.error(f"Unexpected error crawling {url}: {e}")
 
     def generate_sitemap(self):
         """Generate sitemap XML"""
@@ -103,9 +113,9 @@ class SitemapGenerator:
         try:
             with open(OUTPUT_PATH, 'w', encoding='utf-8') as f:
                 f.write(xml_str)
-            print(f"Sitemap generated successfully at {OUTPUT_PATH}")
+            logging.info(f"Sitemap generated successfully at {OUTPUT_PATH}")
         except Exception as e:
-            print(f"Error writing sitemap: {e}", file=sys.stderr)
+            logging.error(f"Error writing sitemap: {e}")
 
 def main():
     # Ensure BASE_URL has a scheme
