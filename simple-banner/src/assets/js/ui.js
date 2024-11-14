@@ -56,12 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const formData = new FormData(elements.form);
     const params = new URLSearchParams();
 
-    // Explicitly add text parameter
-    const textInput = document.getElementById('text');
-    if (textInput) {
-      params.append('text', textInput.value);
-    }
-
     for (const [key, value] of formData.entries()) {
       params.append(key, value.startsWith('#') ? value.substring(1) : value);
     }
@@ -92,12 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('theme', theme);
   };
 
-  // Use localStorage instead of cookies for better performance
+
   const savedTheme = localStorage.getItem('theme') ||
     (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   setTheme(savedTheme);
 
-  // Optimize copy functionality
+
   const copyButtons = document.querySelectorAll('.copy-button');
   copyButtons.forEach(button => {
     button.addEventListener('click', () => {
