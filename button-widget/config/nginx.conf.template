@@ -28,10 +28,21 @@ http {
         root /var/www/html;
         index index.html;
 
-        # Security Headers (Cloudflare will add additional security headers)
-        add_header X-Frame-Options "SAMEORIGIN" always;
-        add_header X-Content-Type-Options "nosniff" always;
-        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+        # Security Headers
+        add_header Content-Security-Policy "
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://$SITE_ORIGIN ../assets/js/;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com ../assets/css/;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data: https://img.shields.io https://$SITE_ORIGIN/favicon.svg;
+        frame-src 'self';
+        connect-src 'self' https://$SITE_ORIGIN;
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+        upgrade-insecure-requests;
+        block-all-mixed-content;
+    " always;
 
 
         # Compression
