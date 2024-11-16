@@ -28,17 +28,21 @@ http {
         root /var/www/html;
         index index.html;
 
-        add_header Content-Security-Policy "default-src 'self';
-            script-src 'self' 'unsafe-inline' 'unsafe-eval' https://$host/assets/js/;
-            style-src 'self' 'unsafe-inline' https://fonts.googleapis.com /assets/css/;
-            font-src 'self' https://fonts.gstatic.com;
-            img-src 'self' data: https://img.shields.io https://$host/favicon.svg;
-            frame-src 'self';
-            connect-src 'self' https://$host;
+        add_header Content-Security-Policy "
+            default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';
+            script-src 'self' 'unsafe-inline' 'unsafe-eval' https://$host;
+            style-src 'self' 'unsafe-inline' https: https://fonts.googleapis.com;
+            img-src 'self' data: https: blob:;
+            font-src 'self' https://fonts.gstatic.com data:;
+            connect-src 'self' https: wss:;
+            frame-src 'self' https:;
+            media-src 'self' https:;
             object-src 'none';
             base-uri 'self';
-            form-action 'self';
+            form-action 'self' https:;
+            frame-ancestors 'self' https:;
             upgrade-insecure-requests;
+        " always;
 
 
 
@@ -72,6 +76,8 @@ http {
                 return 301 /ui/;
             }
             try_files $uri $uri/ /index.html;
+
+
         }
 
         # UI Location
@@ -82,6 +88,23 @@ http {
             # HTML files cache control
             location ~* \.html$ {
                 etag on;
+            }
+
+            # Add CORS headers for Cloudflare
+            add_header 'Access-Control-Allow-Origin' '*' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization' always;
+            add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range' always;
+
+            # Handle OPTIONS method for CORS
+            if ($request_method = 'OPTIONS') {
+                add_header 'Access-Control-Allow-Origin' '*';
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+                add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization';
+                add_header 'Access-Control-Max-Age' 1728000;
+                add_header 'Content-Type' 'text/plain; charset=utf-8';
+                add_header 'Content-Length' 0;
+                return 204;
             }
         }
 
