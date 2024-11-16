@@ -1,0 +1,45 @@
+# Main nginx configuration
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include mime.types;
+    default_type application/octet-stream;
+
+    server {
+        listen 80;
+        listen [::]:80;
+        root /var/www/html;
+        index index.html;
+        server_name ${SITE_ORIGIN};
+
+        # Enable compression
+        gzip on;
+        gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/svg+xml;
+        gzip_min_length 1000;
+        gzip_comp_level 6;
+
+        location ~* \.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2)$ {
+            expires 30d;
+            add_header Cache-Control "public, no-transform";
+        }
+
+        # Language Detection and Routing
+        location / {
+            alias /var/www/html/;
+            try_files $uri $uri/ /index.html;
+        }
+
+        # Serve language-specific content
+        location /ui/ {
+            alias /var/www/html/ui/;
+            try_files $uri $uri/ /ui/index.html;
+        }
+
+
+        # Fallback to English
+        error_page 404 /ui/index.html;
+    }
+}

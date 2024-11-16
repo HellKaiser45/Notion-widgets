@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nord">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Notion Button Widget | ProactiTech</title>
+    <meta name="title" content="Notion Button Widget | ProactiTech">
+    <meta name="description" content="A customizable button widget for Notion-like interfaces, enhancing user experience and design flexibility.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://$SITE_ORIGIN/">
+    <meta property="og:title" content="Notion Button Widget | ProactiTech">
+    <meta property="og:description" content="A customizable button widget for Notion-like interfaces, enhancing user experience and design flexibility.">
+    <meta property="og:image" content="https://$SITE_ORIGIN/favicon.svg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://$SITE_ORIGIN/">
+    <meta property="twitter:title" content="Notion Button Widget | ProactiTech">
+    <meta property="twitter:description" content="A customizable button widget for Notion-like interfaces, enhancing user experience and design flexibility.">
+    <meta property="twitter:image" content="https://$SITE_ORIGIN/favicon.svg">
+
+    <!-- Additional SEO and Indexing -->
+    <meta name="keywords" content="notion, widget, button, customizable, ui, design, proactitech">
+    <meta name="author" content="ProactiTech">
+    <link rel="canonical" href="https://$SITE_ORIGIN/">
+
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" media="none" onload="if(media!='all')media='all'">
+
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/webp" href="https://$SITE_ORIGIN/favicon.svg">
+    <link rel="apple-touch-icon" href="https://$SITE_ORIGIN/favicon.svg">
+
+    <!-- Manifest and Theme Color -->
+    <link rel="manifest" href="https://$SITE_ORIGIN/manifest.json">
+    <meta name="theme-color" content="#000000">
+
+    <script src="../assets/js/darkmode.js"></script>
+    <script src="../assets/js/ui.js" type="text/javascript" defer></script>
+
+</head>
+<label class="swap swap-rotate" for="theme-toggle">
+    <span class="sr-only">Toggle theme</span>
+    <input type="checkbox" class="theme-controller" id="theme-toggle" name="theme-toggle" value="black"
+        aria-label="Toggle theme"
+    />
+    <svg class="swap-off h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+        aria-hidden="true">
+        <path
+            d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
+    </svg>
+    <svg class="swap-on h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+        <path
+            d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
+    </svg>
+</label>
+<body class="min-h-screen bg-base-300 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-center">Button Widget</h1>
+        <div class="flex justify-center items-center space-x-2 mb-8">
+            <a href="https://github.com/HellKaiser45/Notion-widgets" target="_blank" rel="noopener noreferrer"
+                aria-label="View project on Github">
+                <img loading='lazy' class="w-auto h-auto object-contain" alt="View on Github"
+                    src="https://img.shields.io/badge/View%20on%20Github-white?logo=github&logoColor=black" height="50"
+                    width="70" />
+            </a>
+            <a href="https://linktr.ee/julienJDE" target="_blank" rel="noopener noreferrer" aria-label="View my social links">
+                <img loading='lazy' class="w-auto h-auto object-contain" alt="My socials"
+                    src="https://img.shields.io/badge/My%20socials-white?logo=linktree" height="50" width="70" />
+            </a>
+            <a href="https://www.twitch.tv/julienjde" target="_blank" rel="noopener noreferrer"
+                aria-label="Check Twitch status">
+                <img loading='lazy' class="w-auto h-auto object-contain" alt="Twitch Status"
+                    src="https://img.shields.io/twitch/status/julienJDE" height="50" width="70" />
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Configuration Form -->
+            <div class="card bg-base-200 shadow-xl">
+                <div class="card-body">
+                    <h2 class="card-title">Customize Your Button</h2>
+                    <form id="configForm" class="space-y-4" onchange="updatePreview()">
+                        <!-- Text -->
+                        <div class="form-control">
+                            <label for="buttonText" class="label">
+                                <span class="label-text">Button Text</span>
+                            </label>
+                            <input id="buttonText" type="text" name="buttonText" class="input input-bordered" value="Click me">
+                        </div>
+
+                        <!-- Colors -->
+                        <div class="form-control">
+                            <label for="bgColor" class="label">
+                                <span class="label-text">Background Color</span>
+                            </label>
+                            <input id="bgColor" type="color" name="bgColor" class="w-full h-12" value="#570DF8">
+                        </div>
+
+                        <div class="form-control">
+                            <label for="bgOpacity" class="label">
+                                <span class="label-text">Background Opacity</span>
+                            </label>
+                            <input id="bgOpacity" type="range" name="bgOpacity" class="range" min="0" max="1" step="0.1" value="1">
+                        </div>
+
+                        <!-- Border -->
+                        <div class="form-control">
+                            <label for="border" class="label cursor-pointer">
+                                <span class="label-text">Enable Border</span>
+                                <input id="border" type="checkbox" name="border" class="toggle">
+                            </label>
+                        </div>
+
+                        <div class="form-control">
+                            <label for="borderColor" class="label">
+                                <span class="label-text">Border Color</span>
+                            </label>
+                            <input id="borderColor" type="color" name="borderColor" class="w-full h-12" value="#000000">
+                        </div>
+
+                        <!-- Font -->
+                        <div class="form-control">
+                            <label for="fontSize" class="label">
+                                <span class="label-text">Font Size (px)</span>
+                            </label>
+                            <input id="fontSize" type="number" name="fontSize" class="input input-bordered" value="16" min="8"
+                                max="72">
+                        </div>
+
+                        <div class="form-control">
+                            <label for="fontFamily" class="label">
+                                <span class="label-text">Font Family</span>
+                            </label>
+                            <input id="fontFamily" type="text" name="fontFamily" class="input input-bordered" value="Roboto"
+                                placeholder="Enter Google Font name">
+                        </div>
+
+                        <div class="form-control">
+                            <label for="textColor" class="label">
+                                <span class="label-text">Text Color</span>
+                            </label>
+                            <input id="textColor" type="color" name="textColor" class="w-full h-12" value="#ffffff">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="space-y-8">
+                <div class="card bg-base-200 shadow-xl">
+                    <div class="card-body">
+                        <h2 class="card-title">Preview</h2>
+                        <div class="rounded-box p-4 min-h-[200px] flex items-center justify-center">
+                            <iframe title="button preview" id="buttonPreview" class="w-full h-[200px] border-none"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-base-200 shadow-xl">
+                    <div class="card-body">
+                        <h2 class="card-title">Generated URL</h2>
+                        <div class="join w-full">
+                            <input id="urlDisplay" type="text" readonly aria-label="Generated URL"
+                                class="input input-bordered join-item w-full">
+                            <button id="copyBtn" class="btn btn-primary join-item" onclick="copyUrl()">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

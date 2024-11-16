@@ -1,0 +1,21 @@
+{
+  "name": "basic-html",
+  "version": "1.0.0",
+  "description": "Flexible HTML project with Tailwind CSS",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/assets/css/main.input.css -o ./src/assets/css/main.css --minify",
+    "watch:css": "tailwindcss -i ./src/assets/css/main.input.css -o ./src/assets/css/main.css --watch"
+  },
+  "keywords": [
+    "html",
+    "tailwind",
+    "multi-page"
+  ],
+  "author": "HellKaiser45",
+  "license": "MIT",
+  "devDependencies": {
+    "daisyui": "^4.12.14",
+    "tailwindcss": "^3.4.14"
+  }
+}

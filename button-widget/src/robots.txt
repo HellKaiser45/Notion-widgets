@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://$SITE_ORIGIN/sitemap.xml
+
+# Directories to disallow
+Disallow: /config/
+Disallow: /scripts/
+
+# Crawl-delay to be respectful to servers
+Crawl-delay: 10
