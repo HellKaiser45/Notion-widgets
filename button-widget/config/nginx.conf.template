@@ -38,7 +38,8 @@ http {
             object-src 'none';
             base-uri 'self';
             form-action 'self';
-            block-all-mixed-content" always;
+            upgrade-insecure-requests;
+
 
 
         # Compression
