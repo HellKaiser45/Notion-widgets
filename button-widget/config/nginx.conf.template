@@ -73,7 +73,6 @@ http {
 
             # HTML files cache control
             location ~* \.html$ {
-                add_header Cache-Control "no-store, must-revalidate";
                 etag on;
             }
         }
