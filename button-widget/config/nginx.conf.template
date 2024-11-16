@@ -28,18 +28,18 @@ http {
         root /var/www/html;
         index index.html;
 
-        add_header Content-Security-Policy "default-src 'self'; \
-        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://$SITE_ORIGIN ../assets/js/; \
-        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com ../assets/css/; \
-        font-src 'self' https://fonts.gstatic.com; \
-        img-src 'self' data: https://img.shields.io https://$SITE_ORIGIN/favicon.svg; \
-        frame-src 'self'; \
-        connect-src 'self' https://$SITE_ORIGIN; \
-        object-src 'none'; \
-        base-uri 'self'; \
-        form-action 'self'; \
-        upgrade-insecure-requests; \
-        block-all-mixed-content;" always;
+        add_header Content-Security-Policy "default-src 'self';
+            script-src 'self' 'unsafe-inline' 'unsafe-eval' https://$host/assets/js/;
+            style-src 'self' 'unsafe-inline' https://fonts.googleapis.com /assets/css/;
+            font-src 'self' https://fonts.gstatic.com;
+            img-src 'self' data: https://img.shields.io https://$host/favicon.svg;
+            frame-src 'self';
+            connect-src 'self' https://$host;
+            object-src 'none';
+            base-uri 'self';
+            form-action 'self';
+            upgrade-insecure-requests;
+            block-all-mixed-content" always;
 
 
         # Compression
