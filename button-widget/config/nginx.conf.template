@@ -1,45 +1,91 @@
 # Main nginx configuration
-
 events {
     worker_connections 1024;
+    multi_accept on;
 }
 
 http {
     include mime.types;
     default_type application/octet-stream;
 
+    # Basic Settings
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 65;
+    types_hash_max_size 2048;
+    client_max_body_size 10M;
+
+    # Optimization
+    open_file_cache max=1000 inactive=20s;
+    open_file_cache_valid 30s;
+    open_file_cache_min_uses 2;
+    open_file_cache_errors on;
+
     server {
         listen 80;
-        listen [::]:80;
+        server_name ${SITE_ORIGIN};
         root /var/www/html;
         index index.html;
-        server_name ${SITE_ORIGIN};
 
-        # Enable compression
+        # Security Headers (Cloudflare will add additional security headers)
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+        add_header Permissions-Policy "camera=(), microphone=(), geolocation=()";
+
+        # Compression
         gzip on;
-        gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/svg+xml;
-        gzip_min_length 1000;
+        gzip_vary on;
+        gzip_proxied any;
         gzip_comp_level 6;
+        gzip_types
+            application/javascript
+            application/json
+            application/xml
+            image/svg+xml
+            text/css
+            text/plain
+            text/xml
+            text/javascript;
+        gzip_min_length 1000;
 
+        # Cache Control for Static Assets
         location ~* \.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2)$ {
             expires 30d;
-            add_header Cache-Control "public, no-transform";
+            add_header Cache-Control "public, immutable, max-age=2592000";
+            access_log off;
+            log_not_found off;
         }
 
-        # Language Detection and Routing
-        location / {
-            alias /var/www/html/;
+        # Root redirect
+        location = / {
+            if ($args = "") {
+                return 301 /ui/;
+            }
             try_files $uri $uri/ /index.html;
         }
 
-        # Serve language-specific content
+        # UI Location
         location /ui/ {
             alias /var/www/html/ui/;
             try_files $uri $uri/ /ui/index.html;
+
+            # HTML files cache control
+            location ~* \.html$ {
+                add_header Cache-Control "no-store, must-revalidate";
+                etag on;
+            }
         }
 
-
-        # Fallback to English
+        # Handle 404
         error_page 404 /ui/index.html;
+
+        # Deny access to hidden files
+        location ~ /\. {
+            deny all;
+            access_log off;
+            log_not_found off;
+        }
     }
 }

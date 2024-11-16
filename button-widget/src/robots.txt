@@ -1,11 +1,17 @@
 User-agent: *
-Allow: /
+Allow: /ui/
 
 Sitemap: https://$SITE_ORIGIN/sitemap.xml
 
 # Directories to disallow
 Disallow: /config/
 Disallow: /scripts/
+
+Allow: *.svg
+Allow: *.png
+Allow: *.jpg
+Allow: *.gif
+Allow: *.webp
 
 # Crawl-delay to be respectful to servers
 Crawl-delay: 10

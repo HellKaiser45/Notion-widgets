@@ -4,45 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Security Headers -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Modified CSP to allow external fonts and scripts -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; script-src 'self' 'unsafe-inline';">
+
+    <!-- Performance Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="../assets/css/main.css" as="style">
+    <link rel="preload" href="../assets/js/darkmode.js" as="script">
+    <link rel="preload" href="../assets/js/ui.js" as="script">
+
     <!-- Primary Meta Tags -->
-    <title>Notion Button Widget | ProactiTech</title>
-    <meta name="title" content="Notion Button Widget | ProactiTech">
+    <title>Notion Button Widget </title>
+    <meta name="title" content="Notion Button Widget ">
     <meta name="description" content="A customizable button widget for Notion-like interfaces, enhancing user experience and design flexibility.">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://$SITE_ORIGIN/">
-    <meta property="og:title" content="Notion Button Widget | ProactiTech">
+    <meta property="og:url" content="https://$SITE_ORIGIN/ui/">
+    <meta property="og:title" content="Notion Button Widget ">
     <meta property="og:description" content="A customizable button widget for Notion-like interfaces, enhancing user experience and design flexibility.">
     <meta property="og:image" content="https://$SITE_ORIGIN/favicon.svg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://$SITE_ORIGIN/">
-    <meta property="twitter:title" content="Notion Button Widget | ProactiTech">
+    <meta property="twitter:url" content="https://$SITE_ORIGIN/ui/">
+    <meta property="twitter:title" content="Notion Button Widget ">
     <meta property="twitter:description" content="A customizable button widget for Notion-like interfaces, enhancing user experience and design flexibility.">
     <meta property="twitter:image" content="https://$SITE_ORIGIN/favicon.svg">
 
     <!-- Additional SEO and Indexing -->
-    <meta name="keywords" content="notion, widget, button, customizable, ui, design, proactitech">
-    <meta name="author" content="ProactiTech">
-    <link rel="canonical" href="https://$SITE_ORIGIN/">
+    <meta name="keywords" content="notion, widget, button, customizable, ui, design">
+    <meta name="author" content="HellKaiser45">
+    <meta name="robots" content="index, follow">
+    <!-- Additional important meta tags -->
+    <meta name="googlebot" content="index, follow">
+    <meta name="google" content="notranslate">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
 
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" media="none" onload="if(media!='all')media='all'">
+    <!-- Performance optimization -->
+    <link rel="preload" as="image" href="https://$SITE_ORIGIN/favicon.svg">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="https://$SITE_ORIGIN/favicon.svg">
+
+    <!-- Language and region -->
+    <meta name="language" content="English">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Additional SEO -->
+    <meta name="rating" content="General">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Preconnect and DNS Prefetch for Performance -->
+    <link rel="preconnect" href="https://$SITE_ORIGIN">
+    <link rel="dns-prefetch" href="https://$SITE_ORIGIN">
+    <link rel="canonical" href="https://$SITE_ORIGIN/ui/">
 
     <!-- Favicon and App Icons -->
     <link rel="icon" type="image/webp" href="https://$SITE_ORIGIN/favicon.svg">
     <link rel="apple-touch-icon" href="https://$SITE_ORIGIN/favicon.svg">
 
-    <!-- Manifest and Theme Color -->
-    <link rel="manifest" href="https://$SITE_ORIGIN/manifest.json">
-    <meta name="theme-color" content="#000000">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" media="print"
+        onload="this.media='all'">
 
-    <script src="../assets/js/darkmode.js"></script>
-    <script src="../assets/js/ui.js" type="text/javascript" defer></script>
+    <!-- Deferred Scripts -->
+    <script src="../assets/js/darkmode.js" defer></script>
+    <script src="../assets/js/ui.js" defer></script>
 
 </head>
 <label class="swap swap-rotate" for="theme-toggle">
