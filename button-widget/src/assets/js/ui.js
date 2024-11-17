@@ -14,6 +14,7 @@ function updatePreview() {
   const textColor = form.textColor.value;
 
   // Construct URL
+
   const baseUrl = window.location.origin;
   const params = new URLSearchParams({
     text,
@@ -28,6 +29,7 @@ function updatePreview() {
 
   const fullUrl = `${baseUrl}?${params.toString()}`;
 
+
   // Update iframe and URL display
   previewFrame.src = fullUrl;
   urlDisplay.value = fullUrl;
@@ -36,15 +38,17 @@ function updatePreview() {
 function copyUrl() {
   const urlDisplay = document.getElementById('urlDisplay');
   urlDisplay.select();
-  document.execCommand('copy');
-
-  // Show copy feedback
-  const copyBtn = document.getElementById('copyBtn');
-  const originalText = copyBtn.textContent;
-  copyBtn.textContent = 'Copied!';
-  setTimeout(() => {
-    copyBtn.textContent = originalText;
-  }, 2000);
+  navigator.clipboard.writeText(urlDisplay.value).then(() => {
+    // Show copy feedback
+    const copyBtn = document.getElementById('copyBtn');
+    const originalText = copyBtn.textContent;
+    copyBtn.textContent = 'Copied!';
+    setTimeout(() => {
+      copyBtn.textContent = originalText;
+    }, 2000);
+  }).catch(err => {
+    console.error('Failed to copy text: ', err);
+  });
 }
 
 // Update preview when the page loads
