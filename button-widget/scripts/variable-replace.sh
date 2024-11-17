@@ -7,13 +7,7 @@ replace_vars() {
     if [ ! -e "$target" ]; then
         echo "Error: Target path '$target' does not exist"
         exit 1
-    }
 
-    # Install sponge if not available (part of moreutils)
-    if ! command -v sponge &> /dev/null; then
-        echo "Installing moreutils for sponge command..."
-        sudo apt-get install -y moreutils || sudo yum install -y moreutils || brew install moreutils
-    }
 
     # Process a single file
     process_file() {
@@ -38,11 +32,6 @@ replace_vars() {
     fi
 }
 
-# Usage: ./script.sh path/to/target
-if [ "$#" -lt 1 ]; then
-    echo "Usage: $0 <target_path>"
-    echo "Make sure environment variables are set before running"
-    exit 1
-fi
+
 
 replace_vars "$1"
