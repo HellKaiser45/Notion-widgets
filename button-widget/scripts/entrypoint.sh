@@ -35,8 +35,8 @@ generate_sitemap() {
 # Main entrypoint
 main() {
     validate_env
-    ./variable-replace.sh /etc/nginx/conf.d/default.conf
-    ./variable-replace.sh /var/www/html/
+    /usr/local/bin/variable-replace.sh /etc/nginx/conf.d/default.conf
+    /usr/local/bin/variable-replace.sh /var/www/html/
     generate_sitemap
 
     log "Starting nginx in foreground"
