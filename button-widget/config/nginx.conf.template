@@ -58,8 +58,6 @@ http {
                 return 301 /ui/;
             }
             try_files $uri $uri/ /index.html;
-
-
         }
 
         # UI Location
@@ -82,5 +80,6 @@ http {
             access_log off;
             log_not_found off;
         }
+        add_header Content-Security-Policy "default-src 'self'; script-src 'self' https://$host; style-src 'self' https://$host https://fonts.googleapis.com; img-src 'self' https://img.shields.io; font-src 'self'; frame-src 'self'; connect-src 'self' https://$host";
     }
 }
