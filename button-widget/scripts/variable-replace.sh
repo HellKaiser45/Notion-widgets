@@ -7,8 +7,7 @@ replace_vars() {
     if [ ! -e "$target" ]; then
         echo "Error: Target path '$target' does not exist"
         exit 1
-
-
+    fi
     # Process a single file
     process_file() {
         local file="$1"
