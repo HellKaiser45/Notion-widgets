@@ -35,7 +35,7 @@ generate_sitemap() {
 # Main entrypoint
 main() {
     validate_env
-    /usr/local/bin/variable-replace.sh /etc/nginx/conf.d/default.conf
+    /usr/local/bin/variable-replace.sh /etc/nginx/nginx.conf
     /usr/local/bin/variable-replace.sh /var/www/html/
     generate_sitemap
 
