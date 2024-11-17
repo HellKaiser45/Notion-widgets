@@ -3,11 +3,15 @@
 # Stage 1: Build Stage with Node.js
 FROM node:16-alpine AS builder
 
-# Copy the project files to the build context
-COPY . .
+WORKDIR /app
+
+COPY package*.json ./
 
 # Install Tailwind CLI
 RUN npm install
+
+# Copy the project files to the build context
+COPY . .
 
 # Build the CSS using Tailwind
 RUN npm run build:css
@@ -16,25 +20,26 @@ RUN npm run build:css
 FROM python:3.10-alpine AS production
 
 # Install necessary packages
-RUN apk add --no-cache nginx curl gettext && \
+RUN apk add --no-cache nginx curl gettext moreutils bash && \
   pip install requests beautifulsoup4
 
 # Create the web root directory
-RUN mkdir -p /var/www/html
+RUN rm -rf /var/www/html/*
 
 # Copy static assets and compiled CSS from the builder stage
-COPY --from=builder src/ /tmp/project/src/
+COPY --from=builder /app/src/ /var/www/html/
 
 # Copy scripts and configuration
-COPY --from=builder /scripts/sitemap_generator.py /usr/local/bin/
-COPY --from=builder /scripts/entrypoint.sh /usr/local/bin/
-COPY --from=builder /config/nginx.conf.template /etc/nginx/conf.d/default.conf.template
+COPY --from=builder /app/scripts/sitemap_generator.py /usr/local/bin/
+COPY --from=builder /app/scripts/entrypoint.sh /usr/local/bin/
+COPY --from=builder /app/scripts/variable-replace.sh /usr/local/bin/
+COPY --from=builder /app/config/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Set permissions for executables and web root
 RUN chmod +x /usr/local/bin/entrypoint.sh && \
+  chmod +x /usr/local/bin/variable-replace.sh && \
   chmod +x /usr/local/bin/sitemap_generator.py && \
   chmod -R 755 /var/www/html
-
 
 # Expose the default HTTP port
 EXPOSE 80
