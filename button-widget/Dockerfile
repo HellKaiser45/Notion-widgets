@@ -50,7 +50,8 @@ COPY --from=builder /app/config/nginx.conf /etc/nginx/nginx.conf
 RUN chmod +x /usr/local/bin/entrypoint.sh && \
   chmod +x /usr/local/bin/variable-replace.sh && \
   chmod +x /usr/local/bin/sitemap_generator.py && \
-  chmod -R 755 /var/www/html
+  chmod -R 755 /var/www/html && \
+  chown -R nginx:nginx /var/www/html
 
 # Expose the default HTTP port
 EXPOSE 80
